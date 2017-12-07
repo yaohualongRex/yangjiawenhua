@@ -133,3 +133,6 @@ CREATE TABLE `user` (
 
 ALTER TABLE `yangjiawenhua`.`book_info` 
 CHANGE COLUMN `public` `publicer` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL AFTER `book_name`;
+
+ALTER TABLE `yangjiawenhua`.`bill` 
+CHANGE COLUMN `from` `frome` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL AFTER `id`;
