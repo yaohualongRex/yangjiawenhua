@@ -130,3 +130,6 @@ CREATE TABLE `user` (
   `user_no` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `yangjiawenhua`.`book_info` 
+CHANGE COLUMN `public` `publicer` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL AFTER `book_name`;
