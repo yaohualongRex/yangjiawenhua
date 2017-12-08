@@ -1,6 +1,8 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
+#个人配置文件不再提交
+application-local.yml
 ### STS ###
 .apt_generated
 .classpath
