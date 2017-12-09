@@ -22,6 +22,10 @@ public class TestController {
 	public String hello() {
 		return "hello";
 	}
+	@GetMapping("way")
+	public String way() {
+		return "noway";
+	}
 	
 	@GetMapping("test")
 	@ResponseBody
@@ -41,5 +45,17 @@ public class TestController {
 //		billMapper.updateByPrimaryKey(new Bill());
 		
 		return "success";
+	}
+	@GetMapping("testBill")
+	@ResponseBody
+	public String testBill() {
+		Bill bill = new Bill();
+		bill.setBookId((long) 1);
+		billMapper.insert(bill);
+		System.out.println(JSON.toJSONString(bill));
+//		billMapper.insert(new Bill());
+//		billMapper.updateByPrimaryKey(new Bill());
+		
+		return bill+"success";
 	}
 }
