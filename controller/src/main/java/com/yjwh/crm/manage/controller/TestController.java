@@ -23,7 +23,7 @@ public class TestController {
 		return "hello";
 	}
 	@GetMapping("index")
-	public String way() {
+	public String index() {
 		return "index";
 	}
 	@GetMapping("/")

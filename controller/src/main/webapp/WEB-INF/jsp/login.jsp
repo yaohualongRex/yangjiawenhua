@@ -22,7 +22,7 @@
 					<div class="logo_box">
 					<h1><b>阳夏图书管理系统</b></h1><br>
 						<h3>用户登录</h3>
-						<form action="#" name="f" method="post">
+						<form action="login" name="index.jsp" method="post">
 							<div class="input_outer">
 								<span class="u_user"></span>
 								<input name="username" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入账户">
