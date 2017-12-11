@@ -22,13 +22,13 @@ public class TestController {
 	public String hello() {
 		return "hello";
 	}
-	@GetMapping("way")
+	@GetMapping("index")
 	public String way() {
-		return "noway";
+		return "index";
 	}
 	@GetMapping("/")
 	public String login() {
-		return "index";
+		return "login";
 	}
 	
 	@GetMapping("test")
