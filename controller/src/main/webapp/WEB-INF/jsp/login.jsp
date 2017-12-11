@@ -42,7 +42,6 @@
 		<script src="js/rAF.js"></script>
 		<script src="js/demo-1.js"></script>
 		<div style="text-align:center;">
-<p>更多模板：<a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>
 </div>
 	</body>
 </html> 
