@@ -26,6 +26,10 @@ public class TestController {
 	public String way() {
 		return "noway";
 	}
+	@GetMapping("/")
+	public String login() {
+		return "index";
+	}
 	
 	@GetMapping("test")
 	@ResponseBody
