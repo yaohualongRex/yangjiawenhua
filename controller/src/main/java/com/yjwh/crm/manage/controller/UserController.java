@@ -18,7 +18,7 @@ public class UserController {
 	@GetMapping("login")
 	@ResponseBody
 	public String login(User user) {
-		List<User> select = userMapper.select(user);
+//		List<User> select = userMapper.select(user);
 		return "index";
 	}
 }
