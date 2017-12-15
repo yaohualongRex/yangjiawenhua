@@ -136,3 +136,36 @@ CHANGE COLUMN `public` `publicer` varchar(255) CHARACTER SET utf8 COLLATE utf8_g
 
 ALTER TABLE `yangjiawenhua`.`bill` 
 CHANGE COLUMN `from` `frome` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL AFTER `id`;
+
+CREATE TABLE `role` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(40) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `privilege` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `privilege_name` varchar(40) NOT NULL,
+  `level` int(10) unsigned DEFAULT NULL COMMENT '显示顺序',
+  `pid` int(10) NOT NULL COMMENT '父权限id ',
+  `type` varchar(1) NOT NULL COMMENT '权限类型:\n0 菜单\n1 按钮 ',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `user_role` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(20) NOT NULL,
+  `role_id` int(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `i_user_role_userId` (`user_id`) USING BTREE,
+  KEY `i_user_role_roleId` (`role_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `role_privilege` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `role_id` int(10) NOT NULL,
+  `privilege_id` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `i_role_privilege_roleId` (`role_id`) USING BTREE,
+  KEY `i_role_privilege_privilege_id` (`privilege_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=929 DEFAULT CHARSET=utf8;
