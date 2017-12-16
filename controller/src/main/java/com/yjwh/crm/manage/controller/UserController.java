@@ -18,6 +18,7 @@ import com.yjwh.crm.manage.service.PrivilegeService;
 import com.yjwh.crm.mapper.UserMapper;
 import com.yjwh.crm.model.User;
 import com.yjwh.crm.po.PrivilegeModoule;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /*
  * 用户资料管理
@@ -65,5 +66,18 @@ public class UserController {
 
         session.setMaxInactiveInterval(1);
         return "redirect:/";
+    }
+    @RequestMapping("userAddJsp")
+    public String userAddJsp(HttpSession session, HttpServletRequest request ,HttpServletResponse response) {
+        return "userAdd";
+    }
+    @RequestMapping("addUser")
+    public String addUser(HttpSession session, HttpServletRequest request ,HttpServletResponse response,User user) {
+        User user1 = new User();
+        user1.setUsername(user.getUsername());
+        if (userMapper.selectOne(user1)!=null){
+            return "forword:/userAddJsp?msg=用户名已经存在";
+        }
+        return "index";
     }
 }

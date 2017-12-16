@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="../../css/demo.css" />
 <!--必要样式-->
 <link rel="stylesheet" type="text/css" href="../../css/component.css" />
-<link rel="stylesheet" href="../../css/layui.css">
+<link rel="stylesheet" href="../../css/layui.css" media="all">
 
+<script src="../../layui.js" charset="utf-8"></script>
 <%-- <script language="javascript" src="${ctx}/js/common.js"></script> --%>
