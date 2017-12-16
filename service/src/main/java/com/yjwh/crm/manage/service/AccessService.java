@@ -1,62 +1,97 @@
 package com.yjwh.crm.manage.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import org.springframework.stereotype.Component;
+import com.alibaba.fastjson.JSON;
+import com.yjwh.crm.mapper.PrivilegeMapper;
+import com.yjwh.crm.mapper.RoleMapper;
+import com.yjwh.crm.mapper.RolePrivilegeMapper;
+import com.yjwh.crm.mapper.UserRoleMapper;
+import com.yjwh.crm.model.*;
+import com.yjwh.crm.po.UserModule;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yjwh.crm.model.Access;
 import com.yjwh.crm.po.AccessModoule;
+import tk.mybatis.mapper.entity.Example;
 
 @Service
 public class AccessService {
 
-	public List<AccessModoule> getUsersAllAccesses() {
-		List<Access> accesses = new ArrayList<>();
+	@Autowired
+	private UserRoleMapper userRoleMapper;
+	@Autowired
+	private RolePrivilegeMapper rolePrivilegeMapper;
+	@Autowired
+	private PrivilegeMapper privilegeMapper;
+	@Autowired
+	private RoleMapper roleMapper;
 
-		accesses.add(new Access(1l, "", "系统管理", 1, null));
-		accesses.add(new Access(11l, "", "用户资料管理", 2, 1l));
-
-		accesses.add(new Access(2l, "", "客户管理", 1, null));
-		accesses.add(new Access(21l, "", "客户信息查询", 2, 2l));
-		accesses.add(new Access(22l, "", "客户信息录入", 2, 2l));
-
-		accesses.add(new Access(3l, "", "图书管理", 1, null));
-		accesses.add(new Access(31l, "", "合作图书管理", 2, 2l));
-		accesses.add(new Access(32l, "", "自费图书管理", 2, 2l));
-
-		accesses.add(new Access(4l, "", "订单管理", 1, null));
-		accesses.add(new Access(5l, "", "发票管理", 1, null));
-		accesses.add(new Access(6l, "", "推荐费管理", 1, null));
-		accesses.add(new Access(7l, "", "日志查询", 1, null));
-
+	public List<AccessModoule> getUsersAllAccesses(User user) {
+		// 获取用户所有的角色id
+		ArrayList<Long> roleIds = new ArrayList<>();
+		UserRole userRole = new UserRole(user.getId());
+		List<UserRole> userRoles = userRoleMapper.select(userRole);
+		userRoles.forEach(n -> roleIds.add(n.getRoleId()));
+		// 根据角色id获取所有的权限id
+		ArrayList<Long> privalegeIds = new ArrayList<>();
+		Example example = new Example(RolePrivilege.class);
+		example.createCriteria().andIn("roleId",roleIds);
+		List<RolePrivilege> rolePrivileges = rolePrivilegeMapper.selectByExample(example);
+		rolePrivileges.forEach(n -> privalegeIds.add(n.getPrivilegeId()));
+		// 获取所有权限
+		example= new Example(Privilege.class);
+		example.createCriteria().andIn("id",privalegeIds);
+		List<Privilege> privaleges = privilegeMapper.selectByExample(example);
+		// 数据结构优化
 		Map<Long, AccessModoule> accessMap = new HashMap<>();
-		for (Access access : accesses) {
-			Long key = access.getType().equals(1) ? access.getId() : access.getParrentId();
-			AccessModoule modoule = accessMap.get(key) == null ? new AccessModoule() : accessMap.get(key);
-			if (access.getType().equals(1)) {
-				modoule.setLeftFather(access);
-			} else if (access.getType().equals(2)) {
-				modoule.getLeftSons().add(access);
-			} else if (access.getType().equals(3)) {
-				modoule.getRightButtons().add(access);
-			} else {
-				throw new RuntimeException("未知的权限类型");
-			}
-			accessMap.put(key, modoule);
-		}
+		this.getType(privaleges, 1).forEach(father -> accessMap.put(father.getId(),new AccessModoule(father)));
+		this.getType(privaleges, 2).forEach(son -> accessMap.get(son.getPid()).getSons().add(son));
+		// 根据父id排序
 		List<AccessModoule> result = new ArrayList<>(accessMap.values());
 		Collections.sort(result, new Comparator<AccessModoule>() {
 			public int compare(AccessModoule modoule1, AccessModoule modoule2) {
-				return (int) (modoule1.getLeftFather().getId() - modoule2.getLeftFather().getId());
+				return (int) (modoule1.getFather().getId() - modoule2.getFather().getId());
 			};
 		});
 		return result;
+	}
+	public List<Privilege> selectButtonsByPid(Long pid){
+		Example example = new Example(Privilege.class);
+		example.createCriteria().andEqualTo("pid",pid).andEqualTo("type",3);
+		return privilegeMapper.selectByExample(example);
+	}
 
+	/**
+	 * 获取不同type的权限
+	 * @param privileges
+	 * @param i
+	 * @return
+	 */
+	private List<Privilege> getType(List<Privilege> privileges, Integer i){
+		List<Privilege> temp = new ArrayList<>();
+		for (Privilege privilege : privileges) {
+			if (privilege.getType().equals(i))
+				temp.add(privilege);
+		}
+		return temp;
+	}
+
+	public UserModule getUserModule(User user) {
+		UserModule userModule = JSON.parseObject(JSON.toJSONString(user), UserModule.class);
+		// 获取用户所有的角色id
+		ArrayList<Long> roleIds = new ArrayList<>();
+		UserRole userRole = new UserRole(user.getId());
+		List<UserRole> userRoles = userRoleMapper.select(userRole);
+		userRoles.forEach(n -> roleIds.add(n.getRoleId()));
+		// 获取所有权限
+		Example example= new Example(Role.class);
+		example.createCriteria().andIn("id",roleIds);
+		List<Role> roles = roleMapper.selectByExample(example);
+
+		StringBuilder sb = new StringBuilder();
+		roles.forEach(role -> sb.append(","+role.getRoleName()));
+		userModule.setRoleName(sb.substring(1));
+		return userModule;
 	}
 }

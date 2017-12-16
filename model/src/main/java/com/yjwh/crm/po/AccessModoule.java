@@ -1,38 +1,35 @@
 package com.yjwh.crm.po;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-import com.yjwh.crm.model.Access;
+import com.yjwh.crm.model.Privilege;
 
 public class AccessModoule {
-	Access leftFather;
-	List<Access> leftSons = new ArrayList<>();
-	List<Access> rightButtons = new ArrayList<>();
+	Privilege father;
+	List<Privilege> sons = new ArrayList<>();
 
-	public List<Access> getLeftSons() {
-		return leftSons;
+	public Privilege getFather() {
+		return father;
 	}
 
-	public void setLeftSons(List<Access> leftSons) {
-		this.leftSons = leftSons;
+	public void setFather(Privilege faher) {
+		this.father = faher;
 	}
 
-	public List<Access> getRightButtons() {
-		return rightButtons;
+	public List<Privilege> getSons() {
+		return sons;
 	}
 
-	public void setRightButtons(List<Access> rightButtons) {
-		this.rightButtons = rightButtons;
+	public void setSons(List<Privilege> sons) {
+		this.sons = sons;
 	}
 
-	public Access getLeftFather() {
-		return leftFather;
+	public AccessModoule(Privilege faher) {
+		this.father = faher;
 	}
 
-	public void setLeftFather(Access leftFather) {
-		this.leftFather = leftFather;
-	}
+	public AccessModoule() {
 
+	}
 }

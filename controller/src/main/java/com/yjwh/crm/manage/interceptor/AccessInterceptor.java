@@ -1,44 +1,51 @@
 package com.yjwh.crm.manage.interceptor;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.yjwh.crm.manage.service.AccessService;
+import com.yjwh.crm.model.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.yangjiawenhua.utils.CommonUtils;
+
+import java.util.List;
 
 @Component
 public class AccessInterceptor implements HandlerInterceptor {
+	@Autowired
+	private AccessService accessService;
+	@Autowired
+	private ApplicationContext application;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
-		// 解析url中当前使用的是哪部分权限
+		// 解析url中当前使用的是哪部分权限，并根据当前权限尝试获取按钮
 		this.parseCurrentAccess(request);
 
 		// 取消拦截
 //		if (true)
 //			return true;
 
-		// 添加无需验证的url
+		// 添加无需验证的url、静态资源
 		String path = request.getRequestURI().toString();
-		if (path.startsWith("/login") || path.startsWith("/index") || path.equals("/"))
+		if (path.contains("/login") || path.equals("/") || path.endsWith(".jpg"))
 			return true;
 
 		// 登录校验
-		// session不存在，或者session中没有保存该用户权限，重定向到登录界面
-		HttpSession session = request.getSession(false);
-		if (session == null || session.getAttribute(session.getId())==null) {
+		// session中没有保存该用户权限，重定向到登录界面
+		HttpSession session = request.getSession();
+		if (session.getAttribute(session.getId())==null) {
 			response.sendRedirect("/");
 			return false;
 		}
 			
-		// 获取cookie中保存的账号密码，尝试登录
-
 		return true;
 	}
 
@@ -61,9 +68,24 @@ public class AccessInterceptor implements HandlerInterceptor {
 
 	private void parseCurrentAccess(HttpServletRequest request) {
 		String[] strs = request.getRequestURI().toString().substring(1).split("/");
-		if (strs.length >= 2)
-			request.setAttribute("currentFather", Long.valueOf(strs[0]));
-		if (strs.length >= 3)
-			request.setAttribute("currentSon", Long.valueOf(strs[1]));
+		Long pid = null;
+		if (strs.length >= 2){
+			pid = Long.valueOf(strs[0]);
+			request.setAttribute("currentFather", pid);
+		}
+
+		if (strs.length >= 3){
+			pid = Long.valueOf(strs[1]);
+			request.setAttribute("currentSon", pid);
+		}
+		pid = 11l;
+		if (pid != null){// 尝试获取按钮
+			WebApplicationContext  webApplicationContext
+					= (WebApplicationContext) request.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+			accessService = (AccessService) webApplicationContext .getBean("accessService");
+			List<Privilege> buttons = accessService.selectButtonsByPid(pid);
+			if (!CollectionUtils.isEmpty(buttons))
+				request.setAttribute("buttons",buttons);
+		}
 	}
 }
