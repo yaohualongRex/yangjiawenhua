@@ -12,11 +12,11 @@ import com.yjwh.crm.po.UserModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yjwh.crm.po.AccessModoule;
+import com.yjwh.crm.po.PrivilegeModoule;
 import tk.mybatis.mapper.entity.Example;
 
 @Service
-public class AccessService {
+public class PrivilegeService {
 
 	@Autowired
 	private UserRoleMapper userRoleMapper;
@@ -27,7 +27,7 @@ public class AccessService {
 	@Autowired
 	private RoleMapper roleMapper;
 
-	public List<AccessModoule> getUsersAllAccesses(User user) {
+	public List<PrivilegeModoule> getUsersAllPrivileges(User user) {
 		// 获取用户所有的角色id
 		ArrayList<Long> roleIds = new ArrayList<>();
 		UserRole userRole = new UserRole(user.getId());
@@ -44,13 +44,13 @@ public class AccessService {
 		example.createCriteria().andIn("id",privalegeIds);
 		List<Privilege> privaleges = privilegeMapper.selectByExample(example);
 		// 数据结构优化
-		Map<Long, AccessModoule> accessMap = new HashMap<>();
-		this.getType(privaleges, 1).forEach(father -> accessMap.put(father.getId(),new AccessModoule(father)));
-		this.getType(privaleges, 2).forEach(son -> accessMap.get(son.getPid()).getSons().add(son));
+		Map<Long, PrivilegeModoule> privilegeMap = new HashMap<>();
+		this.getType(privaleges, 1).forEach(father -> privilegeMap.put(father.getId(),new PrivilegeModoule(father)));
+		this.getType(privaleges, 2).forEach(son -> privilegeMap.get(son.getPid()).getSons().add(son));
 		// 根据父id排序
-		List<AccessModoule> result = new ArrayList<>(accessMap.values());
-		Collections.sort(result, new Comparator<AccessModoule>() {
-			public int compare(AccessModoule modoule1, AccessModoule modoule2) {
+		List<PrivilegeModoule> result = new ArrayList<>(privilegeMap.values());
+		Collections.sort(result, new Comparator<PrivilegeModoule>() {
+			public int compare(PrivilegeModoule modoule1, PrivilegeModoule modoule2) {
 				return (int) (modoule1.getFather().getId() - modoule2.getFather().getId());
 			};
 		});

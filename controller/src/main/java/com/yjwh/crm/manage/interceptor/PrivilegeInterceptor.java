@@ -4,8 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.yjwh.crm.manage.service.AccessService;
+import com.yjwh.crm.manage.service.PrivilegeService;
 import com.yjwh.crm.model.Privilege;
+import com.yjwh.crm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -18,16 +19,16 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Component
-public class AccessInterceptor implements HandlerInterceptor {
+public class PrivilegeInterceptor implements HandlerInterceptor {
 	@Autowired
-	private AccessService accessService;
+	private PrivilegeService privilegeService;
 	@Autowired
 	private ApplicationContext application;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
 		// 解析url中当前使用的是哪部分权限，并根据当前权限尝试获取按钮
-		this.parseCurrentAccess(request);
+		this.parseCurrentPrivilege(request);
 
 		// 取消拦截
 //		if (true)
@@ -41,10 +42,13 @@ public class AccessInterceptor implements HandlerInterceptor {
 		// 登录校验
 		// session中没有保存该用户权限，重定向到登录界面
 		HttpSession session = request.getSession();
-		if (session.getAttribute(session.getId())==null) {
+		if (session.getAttribute("currentUser")==null) {//没有保存当前用户就是没有登陆
 			response.sendRedirect("/");
 			return false;
 		}
+		if (session.getAttribute("privileges")==null) // 有用户没权限，再查一遍权限
+			session.setAttribute("privileges", privilegeService.getUsersAllPrivileges((User) session.getAttribute("currentUser")));
+
 			
 		return true;
 	}
@@ -66,7 +70,7 @@ public class AccessInterceptor implements HandlerInterceptor {
 
 	}
 
-	private void parseCurrentAccess(HttpServletRequest request) {
+	private void parseCurrentPrivilege(HttpServletRequest request) {
 		String[] strs = request.getRequestURI().toString().substring(1).split("/");
 		Long pid = null;
 		if (strs.length >= 2){
@@ -82,8 +86,8 @@ public class AccessInterceptor implements HandlerInterceptor {
 		if (pid != null){// 尝试获取按钮
 			WebApplicationContext  webApplicationContext
 					= (WebApplicationContext) request.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-			accessService = (AccessService) webApplicationContext .getBean("accessService");
-			List<Privilege> buttons = accessService.selectButtonsByPid(pid);
+			privilegeService = (PrivilegeService) webApplicationContext .getBean("privilegeService");
+			List<Privilege> buttons = privilegeService.selectButtonsByPid(pid);
 			if (!CollectionUtils.isEmpty(buttons))
 				request.setAttribute("buttons",buttons);
 		}

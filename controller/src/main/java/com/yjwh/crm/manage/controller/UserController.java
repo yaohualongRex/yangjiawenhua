@@ -14,10 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.yjwh.crm.manage.service.AccessService;
+import com.yjwh.crm.manage.service.PrivilegeService;
 import com.yjwh.crm.mapper.UserMapper;
 import com.yjwh.crm.model.User;
-import com.yjwh.crm.po.AccessModoule;
+import com.yjwh.crm.po.PrivilegeModoule;
 
 /*
  * 用户资料管理
@@ -28,7 +28,7 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private AccessService accessService;
+    private PrivilegeService privilegeService;
 
     @PostMapping("login")
     public String login(User user, HttpSession session, HttpServletResponse response, HttpServletRequest request) {
@@ -46,10 +46,10 @@ public class UserController {
             response.addCookie(cookie);
 
             // 根据用户获取该用户的权限
-            List<AccessModoule> accessModoules = accessService.getUsersAllAccesses(loginUser);
-            session.setAttribute("accesses", accessModoules);
+            List<PrivilegeModoule> privilegeModoules = privilegeService.getUsersAllPrivileges(loginUser);
+            session.setAttribute("privileges", privilegeModoules);
 
-            UserModule userModule = accessService.getUserModule(loginUser);
+            UserModule userModule = privilegeService.getUserModule(loginUser);
             session.setAttribute("currentUser", userModule);
             return "redirect:/index";
         } else {

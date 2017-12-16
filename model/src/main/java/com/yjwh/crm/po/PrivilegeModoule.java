@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.yjwh.crm.model.Privilege;
 
-public class AccessModoule {
+public class PrivilegeModoule {
 	Privilege father;
 	List<Privilege> sons = new ArrayList<>();
 
@@ -25,11 +25,11 @@ public class AccessModoule {
 		this.sons = sons;
 	}
 
-	public AccessModoule(Privilege faher) {
+	public PrivilegeModoule(Privilege faher) {
 		this.father = faher;
 	}
 
-	public AccessModoule() {
+	public PrivilegeModoule() {
 
 	}
 }
