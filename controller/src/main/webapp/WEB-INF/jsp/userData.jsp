@@ -30,30 +30,36 @@
         <div class="layui-body">
             <!-- 内容主体区域 -->
             <div class="logo_box1">
-            <form class="layui-form" action="">
+            <form class="layui-form layui-form-pane" action="">
   <div class="layui-form-item">
     <label class="layui-form-label">编号:</label>
     <div class="layui-input-inline">
-      <input type="text" name="userNo" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" value="${userdata.chinaName }">
+      <input type="text" name="userNo" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" value="${userdata.userNo }">
     </div>
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">姓名:</label>
     <div class="layui-input-inline">
-      <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+      <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input"value="${userdata.chinaName }">
+    </div>
+  </div>
+  <div class="layui-form-item" pane="">
+    <label class="layui-form-label">性别:</label>
+    <div class="layui-input-inline">
+      <input type="radio" name="sex" value="男" title="男" checked="">
+      <input type="radio" name="sex" value="女" title="女">
     </div>
   </div>
   <div class="layui-form-item">
-    <label class="layui-form-label">性别:</label>
+    <label class="layui-form-label">职位:</label>
     <div class="layui-input-inline">
-      <input type="radio" name="sex" value="男" title="男" checked="">男
-      <input type="radio" name="sex" value="女" title="女">女
+      <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" value="${currentUser.roleName}">
     </div>
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">部门:</label>
     <div class="layui-input-inline">
-      <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+      <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" value="${userdata.dtoId}">
     </div>
   </div>
   <div class="layui-form-item">

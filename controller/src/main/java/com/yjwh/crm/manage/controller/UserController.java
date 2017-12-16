@@ -81,11 +81,14 @@ public class UserController {
             return "forword:/userAddJsp?msg=用户名已经存在";
         }
         return "index";
-
+    }
+    
     @RequestMapping("userData")
     public String updateUserData(User user,Model model,HttpSession session, HttpServletRequest request ,HttpServletResponse response) {
     	User selectOne = userMapper.selectByPrimaryKey(user.getId());
     	model.addAttribute("userdata", selectOne);
+    	UserModule userModule = privilegeService.getUserModule(user);
+        session.setAttribute("currentUser", userModule);
         return "userData";
 
     }
