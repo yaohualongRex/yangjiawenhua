@@ -4,31 +4,29 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "access")
-public class Access {
+@Table(name = "privilege")
+public class Privilege {
 	@Id
 	@Column(name = "id")
 	private Long id;
 	@Column(name = "url")
 	private String url;
-	@Column(name = "name")
-	private String name;
+	@Column(name = "privilege_name")
+	private String privilegeName;
 	@Column(name = "type")
 	private Integer type;// 1.左父节点，2.左子节点，3.右按钮
-	@Column(name = "parrent_id")
-	private Long parrentId;
+	@Column(name = "pid")
+	private Long pid;
 
-	public Access(Long id, String url, String name, Integer type, Long parrentId) {
-		super();
+	public Privilege(Long id, String url, String privilegeName, Integer type, Long pid) {
 		this.id = id;
 		this.url = url;
-		this.name = name;
+		this.privilegeName = privilegeName;
 		this.type = type;
-		this.parrentId = parrentId;
+		this.pid = pid;
 	}
 
-	public Access() {
-		super();
+	public Privilege() {
 	}
 
 	public Long getId() {
@@ -47,12 +45,12 @@ public class Access {
 		this.url = url;
 	}
 
-	public String getName() {
-		return name;
+	public String getPrivilegeName() {
+		return privilegeName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPrivilegeName(String privilegeName) {
+		this.privilegeName = privilegeName;
 	}
 
 	public Integer getType() {
@@ -63,12 +61,11 @@ public class Access {
 		this.type = type;
 	}
 
-	public Long getParrentId() {
-		return parrentId;
+	public Long getPid() {
+		return pid;
 	}
 
-	public void setParrentId(Long parrentId) {
-		this.parrentId = parrentId;
+	public void setPid(Long pid) {
+		this.pid = pid;
 	}
-
 }
