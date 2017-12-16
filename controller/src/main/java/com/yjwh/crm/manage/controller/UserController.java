@@ -11,6 +11,7 @@ import com.yangjiawenhua.utils.CommonUtils;
 import com.yjwh.crm.po.UserModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -65,5 +66,11 @@ public class UserController {
 
         session.setMaxInactiveInterval(1);
         return "redirect:/";
+    }
+    @RequestMapping("userData")
+    public String updateUserData(User user,Model model,HttpSession session, HttpServletRequest request ,HttpServletResponse response) {
+    	User selectOne = userMapper.selectByPrimaryKey(user.getId());
+    	model.addAttribute("userdata", selectOne);
+        return "userData";
     }
 }
