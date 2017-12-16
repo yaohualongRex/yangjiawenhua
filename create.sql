@@ -1,3 +1,7 @@
+CREATE DATABASE yangjiawenhua;
+
+USE yangjiawenhua;
+
 CREATE TABLE `bill` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `from` varchar(255) DEFAULT NULL,
