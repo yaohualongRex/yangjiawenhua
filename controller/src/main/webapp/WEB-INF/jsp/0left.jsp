@@ -13,12 +13,12 @@
 			<li class="layui-nav-item">
 		</c:otherwise>
 	</c:choose>
-	<a class="" href="javascript:;">${privilege.father.privilegeName }</a>
+	<a class="" href="${privilege.father.url}">${privilege.father.privilegeName }</a>
 	<c:if test="${!empty privilege.sons }">
 		<dl class="layui-nav-child">
 			<c:forEach items="${privilege.sons }" var="son">
 				<dd <c:if test="${son.id eq currentSon }">class='layui-this'</c:if>>
-					<a href="javascript:;">${son.privilegeName }</a>
+					<a href="${son.url}">${son.privilegeName }</a>
 				</dd>
 			</c:forEach>
 		</dl>

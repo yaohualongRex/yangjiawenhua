@@ -1,8 +1,7 @@
 package com.yjwh.crm.manage.controller;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -18,7 +17,9 @@ public class BeginController {
 		return "index";
 	}
 	@RequestMapping("/")
-	public String login() {
+	public String login(Model model, String msg) {
+		if ("1".equalsIgnoreCase(msg))
+			model.addAttribute("msg","用户名、密码不匹配");
 		return "login";
 	}
 }
