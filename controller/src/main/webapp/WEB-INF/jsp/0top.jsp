@@ -6,7 +6,7 @@
 <!-- 头部区域（可配合layui已有的水平导航） -->
 <ul class="layui-nav layui-layout-left">
 
-	<li class="layui-nav-item">欢迎您,<B>${currentUser.chinaName}</B>进入阳夏图书管理系统!您当前所在用户组:<B>${currentUser.roleName}</B></li>
+	<li class="layui-nav-item">欢迎您, <B>${currentUser.chinaName}</B> 进入阳夏图书管理系统!您当前所在用户组: <B>${currentUser.roleName}</B></li>
 	<!-- <li class="layui-nav-item"><a href="">商品管理</a></li>
 <li class="layui-nav-item"><a href="">用户</a></li>
 <li class="layui-nav-item">
@@ -24,7 +24,7 @@
 	</a>
 		<dl class="layui-nav-child">
 			<dd>
-				<a href="1/11/userData?id=${currentUser.id}">基本资料</a>
+				<a href="1/11/userData">基本资料</a>
 			</dd>
 		</dl></li>
 	<li class="layui-nav-item"><a href="1/11/loginOut">退了</a></li>

@@ -38,24 +38,24 @@
                 	<div class="layui-form-item">
                         <label class="layui-form-label">员工编号</label>
                         <div class="layui-input-inline">
-                            <B><input name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${userdata.userNo}"
+                            <B><input name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${currentUser.userNo}"
                                    class="layui-input" type="text" disabled="disabled"></B>
-                                   <input name="id" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${userdata.id}"
+                                   <input name="id" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${currentUser.id}"
                                    class="layui-input" type="hidden">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">员工姓名</label>
                         <div class="layui-input-inline">
-                            <B><input name="chinaName" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${userdata.chinaName}"
+                            <B><input name="chinaName" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${currentUser.chinaName}"
                                    class="layui-input" type="text"></B>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">员工性别</label>
                         <div class="layui-input-block">
-                            <input name="sex" value="男" title="男"  type="radio">
-                            <input name="sex" value="女" title="女" type="radio">
+                            <input name="sex" value="1" title="男"  type="radio">
+                            <input name="sex" value="2" title="女" type="radio">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -68,7 +68,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">所属部门</label>
                         <div class="layui-input-inline">
-                            <B><input name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${userdata.dtoId}"
+                            <B><input name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${currentUser.dtoId}"
                                    class="layui-input" type="text" disabled="disabled"></B>
                         </div>
                     </div>
