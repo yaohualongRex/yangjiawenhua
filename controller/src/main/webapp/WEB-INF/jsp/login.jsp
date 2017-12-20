@@ -49,7 +49,14 @@
 	<script src="js/EasePack.min.js"></script>
 	<script src="js/rAF.js"></script>
 	<script src="js/demo-1.js"></script>
-	<script type="text/JavaScript">document.getElementById('login_main').userName.focus();</script>
+	<script type="text/JavaScript">
+		<c:if test="${!empty msg}">
+			window.onload=function(){
+				msg = "${msg}"
+				alert(msg);
+			}
+		</c:if>
+	</script>
 	<div style="text-align:center;">
 </div>
 	</body>

@@ -57,7 +57,7 @@ public class UserController {
             session.setAttribute("currentUser", userModule);
             return "redirect:/index";
         } else {
-            return "forword:/?msg=1";
+            return "redirect:/?msg=1";
         }
     }
 
