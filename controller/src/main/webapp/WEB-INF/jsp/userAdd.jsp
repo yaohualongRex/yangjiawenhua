@@ -41,7 +41,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">用户名</label>
                         <div class="layui-input-inline">
-                            <input name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${username}"
+                            <input name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${user.username}"
                                    class="layui-input" type="text">
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">密码</label>
                         <div class="layui-input-inline">
-                            <input name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" value="${password}"
+                            <input name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" value="${user.password}"
                                    class="layui-input" type="password">
                         </div>
                         <div class="layui-form-mid layui-word-aux"></div>
@@ -58,7 +58,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">姓名</label>
                         <div class="layui-input-inline">
-                            <input name="chinaName" lay-verify="required" placeholder="请输入姓名" autocomplete="off" value="${chinaName}"
+                            <input name="chinaName" lay-verify="required" placeholder="请输入姓名" autocomplete="off" value="${user.chinaName}"
                                    class="layui-input" type="text">
                         </div>
                     </div>
@@ -66,19 +66,17 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">用户角色</label>
                         <div class="layui-input-inline">
-                            <select name="roleId" lay-verify="required" value="${roleId}">
-                                <option value="">请选择省</option>
-                                <option value="1">系统管理员</option>
+                            <select name="roleId" lay-verify="required">
+                                <option value="">请选择用户角色</option>
+                                <option value="1" <c:if test="${user.roleId eq 1}">selected</c:if>>系统管理员</option>
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">性别</label>
                         <div class="layui-input-block">
-                            <%--<c:if test='${sex eq "男" || sex eq "" || sex eq null}'>checked=""</c:if>--%>
-                            <%--<c:if test='${sex eq "男" }'>checked=""</c:if>--%>
-                            <input name="sex" value="男" title="男"  type="radio">
-                            <input name="sex" value="女" title="女" type="radio">
+                            <input name="sex" value="男" title="男" type="radio" <c:if test='${user.sex eq "男" || user.sex eq "" || user.sex eq null}'>checked=""</c:if> >
+                            <input name="sex" value="女" title="女" type="radio" <c:if test='${user.sex eq "女" }'>checked=""</c:if> >
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -153,6 +151,12 @@
 
 
         });
+        window.onload = function () {
+            msg = "${msg}";
+            if (msg != null && msg != "") {
+                alert(msg)
+            }
+        }
     </script>
 </div>
 </body>

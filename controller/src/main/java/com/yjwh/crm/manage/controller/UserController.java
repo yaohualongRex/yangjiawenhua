@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import com.yangjiawenhua.utils.CommonUtils;
 import com.yjwh.crm.po.UserModule;
+import com.yjwh.crm.po.UserPo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,7 +57,7 @@ public class UserController {
             session.setAttribute("currentUser", userModule);
             return "redirect:/index";
         } else {
-            return "forward:/?msg=用户名、密码不匹配";
+            return "forword:/?msg=1";
         }
     }
 
@@ -71,17 +72,19 @@ public class UserController {
     }
 
     @RequestMapping("userAddJsp")
-    public String userAddJsp(HttpSession session, HttpServletRequest request ,HttpServletResponse response) {
+    public String userAddJsp(HttpSession session, HttpServletRequest request , HttpServletResponse response, String msg, Model model) {
+        model.addAttribute("msg",msg);
         return "userAdd";
     }
     @RequestMapping("addUser")
-    public String addUser(HttpSession session, HttpServletRequest request ,HttpServletResponse response,User user) {
+    public String addUser(HttpSession session, HttpServletRequest request ,HttpServletResponse response,UserPo user, Model model) {
         User user1 = new User();
         user1.setUsername(user.getUsername());
         if (userMapper.selectOne(user1)!=null){
-            return "forword:/userAddJsp?msg=用户名已经存在";
+            model.addAttribute("user",user);
+            return "forward:userAddJsp?msg=用户名已经存在";
         }
-        return "index";
+        return "forward:userAddJsp";
     }
     
     @RequestMapping("userData")
