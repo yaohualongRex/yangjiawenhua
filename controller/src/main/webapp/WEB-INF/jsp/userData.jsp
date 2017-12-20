@@ -34,18 +34,20 @@
             </fieldset>
 
             <div class="logo_box1">
-                <form class="layui-form layui-form-pane" action="/1/11/addUser" method="post">
+                <form class="layui-form layui-form-pane" action="/1/11/updateUserData" method="post">
                 	<div class="layui-form-item">
                         <label class="layui-form-label">员工编号</label>
                         <div class="layui-input-inline">
                             <B><input name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${userdata.userNo}"
                                    class="layui-input" type="text" disabled="disabled"></B>
+                                   <input name="id" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${userdata.id}"
+                                   class="layui-input" type="hidden">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">员工姓名</label>
                         <div class="layui-input-inline">
-                            <B><input name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${userdata.chinaName}"
+                            <B><input name="chinaName" lay-verify="required" placeholder="请输入用户名" autocomplete="off" value="${userdata.chinaName}"
                                    class="layui-input" type="text"></B>
                         </div>
                     </div>
@@ -73,7 +75,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">旧密码</label>
                         <div class="layui-input-inline">
-                            <input name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" value="${password}"
+                            <input name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" value=""
                                    class="layui-input" type="password">
                         </div>
                         <div class="layui-form-mid layui-word-aux"></div>
@@ -81,7 +83,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">新密码</label>
                         <div class="layui-input-inline">
-                            <input name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" value="${password}"
+                            <input id="password1" name="password1" lay-verify="required" placeholder="请输入密码" autocomplete="off" value=""
                                    class="layui-input" type="password">
                         </div>
                         <div class="layui-form-mid layui-word-aux"></div>
@@ -89,7 +91,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">确认密码</label>
                         <div class="layui-input-inline">
-                            <input name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" value="${password}"
+                            <input id="password2" name="password2" lay-verify="required" placeholder="请输入密码" autocomplete="off" value=""
                                    class="layui-input" type="password">
                         </div>
                         <div class="layui-form-mid layui-word-aux"></div>
@@ -97,7 +99,7 @@
                     
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                            <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="panduan()">立即提交</button>
                         </div>
                     </div>
                 </form>
@@ -168,6 +170,27 @@
 
         });
     </script>
+    <script>
+	function panduan(){
+		var mima1=document.getElementById("password1").value
+		//取出第一个文本框里输如的值密码一
+		var mima2=document.getElementById("password2").value
+		//取出第二个文本框里输如的值密码二
+		if(mima1==mima2){
+			//2个值比较，做判断
+			alert("2个密码一样拉")
+			//输出对话框提示
+			document.getElementById("mima1").focus()
+			//焦点定位
+		}else{
+			//否则
+			alert("密码和密码确认不同，请重新输入")
+			//输出对话框提示
+			document.getElementById("mima1").focus()
+			//焦点定位
+		}
+	};
+	</script>
 </div>
 </body>
 </html>

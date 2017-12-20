@@ -6,7 +6,7 @@
 <!-- 头部区域（可配合layui已有的水平导航） -->
 <ul class="layui-nav layui-layout-left">
 
-	<li class="layui-nav-item">欢迎您,<B>${currentUser.chinaName}</B>进入阳夏图书管理系统!您当前所在用户组:<B>${currentUser.roleName}</B></li>
+	<li class="layui-nav-item">欢迎您,<B>${session.user.chinaName}</B>进入阳夏图书管理系统!您当前所在用户组:<B>${session.user.roleName}</B></li>
 	<!-- <li class="layui-nav-item"><a href="">商品管理</a></li>
 <li class="layui-nav-item"><a href="">用户</a></li>
 <li class="layui-nav-item">
@@ -20,7 +20,7 @@
 </ul>
 <ul class="layui-nav layui-layout-right">
 	<li class="layui-nav-item"><a href="javascript:;"> <img
-			src="http://t.cn/RCzsdCq" class="layui-nav-img"> ${currentUser.username}
+			src="http://t.cn/RCzsdCq" class="layui-nav-img"> ${session.user.chinaName}
 	</a>
 		<dl class="layui-nav-child">
 			<dd>
