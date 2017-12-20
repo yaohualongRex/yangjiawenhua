@@ -52,7 +52,6 @@ public class UserController {
             // 根据用户获取该用户的权限
             List<PrivilegeModoule> privilegeModoules = privilegeService.getUsersAllPrivileges(loginUser);
             session.setAttribute("privileges", privilegeModoules);
-            session.setAttribute("user", loginUser);
             UserModule userModule = privilegeService.getUserModule(loginUser);
             session.setAttribute("currentUser", userModule);
             return "redirect:/index";
@@ -89,8 +88,6 @@ public class UserController {
     public String intoUserData(User user,Model model,HttpSession session, HttpServletRequest request ,HttpServletResponse response) {
     	User selectOne = userMapper.selectByPrimaryKey(user.getId());
     	model.addAttribute("userdata", selectOne);
-    	UserModule userModule = privilegeService.getUserModule(user);
-        session.setAttribute("currentUser", userModule);
         return "userData";
 
     }
