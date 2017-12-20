@@ -88,9 +88,7 @@ public class UserController {
     }
     
     @RequestMapping("userData")
-    public String intoUserData(User user,Model model,HttpSession session, HttpServletRequest request ,HttpServletResponse response) {
-    	User selectOne = userMapper.selectByPrimaryKey(user.getId());
-    	model.addAttribute("userdata", selectOne);
+    public String intoUserData(Model model,HttpSession session, HttpServletRequest request ,HttpServletResponse response) {
         return "userData";
 
     }
@@ -101,7 +99,8 @@ public class UserController {
     	selectOne.setSex(user.getSex());
     	selectOne.setPassword(user.getPassword1());
     	userMapper.updateByPrimaryKeySelective(selectOne);
-    	model.addAttribute("userdata", selectOne);
+    	UserModule userModule = privilegeService.getUserModule(selectOne);
+    	session.setAttribute("currentUser", userModule);
         return "userData";
 
     }
