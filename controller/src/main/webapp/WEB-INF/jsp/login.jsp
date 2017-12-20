@@ -24,7 +24,7 @@
 					</h1>
 					<br>
 					<h3>用户登录</h3>
-					<form action="1/11/login" name="index.jsp" method="post" id="login_main">
+					<form action="/1/11/login" name="index.jsp" method="post" id="login_main">
 						<div class="input_outer">
 							<span class="u_user"></span> <input name="username" class="text"
 								style="color: #FFFFFF !important" type="text"
