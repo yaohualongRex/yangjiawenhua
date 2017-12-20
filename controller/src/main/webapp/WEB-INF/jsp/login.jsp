@@ -37,7 +37,7 @@
 						</div>
 						<div class="mb2">
 							<input type="submit" class="act-but submit"
-								style="color: #FFFFFF; width: 100%">
+								style="color: #FFFFFF; width: 100%" value="登陆">
 						</div>
 					</form>
 				</div>
