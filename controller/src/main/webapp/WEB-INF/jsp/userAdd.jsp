@@ -34,7 +34,7 @@
             </fieldset>
 
             <div class="logo_box1">
-                <form class="layui-form layui-form-pane" action="/1/11/addUser" method="post">
+                <form class="layui-form" action="">
                     <div class="layui-form-item">
                         <label class="layui-form-label">用户名</label>
                         <div class="layui-input-inline">
@@ -82,7 +82,7 @@
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                            <button type="button" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
                         </div>
                     </div>
                 </form>
@@ -142,20 +142,26 @@
                 layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
             });
 
-//            //监听提交
-//            form.on('submit(demo1)', function (data) {
-//                layer.alert(JSON.stringify(data.field), {
-//                    title: '最终的提交信息'
-//                })
-//                return false;
-//            });
-
-
+            //监听提交
+            form.on('submit(demo1)', function (data) {
+                var url = '/1/11/addUser'
+                var json = JSON.stringify(data.field);
+                $.ajax({
+                    type: 'POST',
+                    contentType:"application/json",
+                    url: url,
+                    data: json,
+                    success: callback
+                });
+                return false;
+            });
         });
-        window.onload = function () {
-            msg = "${msg}";
-            if (msg != null && msg != "") {
-                alert(msg)
+        function callback(data) {
+            if (data != ""){
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.msg(data);
+                });
             }
         }
     </script>

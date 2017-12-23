@@ -20,7 +20,7 @@
 </ul>
 <ul class="layui-nav layui-layout-right">
 	<li class="layui-nav-item"><a href="javascript:;"> <img
-			src="http://t.cn/RCzsdCq" class="layui-nav-img"> ${currentUser.chinaName}
+			src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img"> ${currentUser.chinaName}
 	</a>
 		<dl class="layui-nav-child">
 			<dd>

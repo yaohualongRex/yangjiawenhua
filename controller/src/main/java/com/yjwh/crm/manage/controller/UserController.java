@@ -13,8 +13,7 @@ import com.yjwh.crm.po.UserPo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.yjwh.crm.manage.service.PrivilegeService;
 import com.yjwh.crm.mapper.UserMapper;
@@ -22,28 +21,24 @@ import com.yjwh.crm.model.User;
 import com.yjwh.crm.po.PrivilegeModoule;
 import com.yjwh.crm.po.UserDate;
 
-import org.springframework.web.bind.annotation.RequestParam;
-
 /*
  * 用户资料管理
  */
 @Controller
-@RequestMapping("1/11")
+@RequestMapping("/1/11")
 public class UserController {
     @Autowired
     private UserMapper userMapper;
     @Autowired
     private PrivilegeService privilegeService;
 
-    @PostMapping("login")
-    public String login(User user, HttpSession session, HttpServletResponse response, HttpServletRequest request) {
-        User loginUser = null;
-        try {
-            loginUser = userMapper.selectOne(user);
-        } catch (Exception e) {
-            throw new RuntimeException("存在重复的用户，请检查系统");
-        }
+    @PostMapping("/login")
+    @ResponseBody
+    public String login(@RequestBody User user, HttpSession session, HttpServletResponse response) {
+        if (user.getPassword()==null || user.getUsername()==null)
+            throw new RuntimeException("用户名和密码不匹配");
 
+        User loginUser = userMapper.selectOne(user);
         if (loginUser != null) {
             Cookie cookie = new Cookie("JSESSIONID", session.getId());
             cookie.setMaxAge(60 * 60 * 2);
@@ -55,13 +50,13 @@ public class UserController {
             session.setAttribute("privileges", privilegeModoules);
             UserModule userModule = privilegeService.getUserModule(loginUser);
             session.setAttribute("currentUser", userModule);
-            return "redirect:/index";
+            return "";
         } else {
-            return "redirect:/?msg=1";
+            throw new RuntimeException("用户名和密码不匹配");
         }
     }
 
-    @RequestMapping("loginOut")
+    @RequestMapping("/loginOut")
     public String loginOut(HttpSession session, HttpServletRequest request ,HttpServletResponse response) {
         Cookie cookie = CommonUtils.getCookieByName("JSESSIONID",request);
         cookie.setMaxAge(0);
@@ -71,20 +66,20 @@ public class UserController {
         return "redirect:/";
     }
 
-    @RequestMapping("userAddJsp")
+    @RequestMapping("/userAddJsp")
     public String userAddJsp(HttpSession session, HttpServletRequest request , HttpServletResponse response, String msg, Model model) {
         model.addAttribute("msg",msg);
         return "userAdd";
     }
-    @RequestMapping("addUser")
-    public String addUser(HttpSession session, HttpServletRequest request ,HttpServletResponse response,UserPo user, Model model) {
+    @RequestMapping("/addUser")
+    @ResponseBody
+    public String addUser(@RequestBody UserPo user) {
         User user1 = new User();
         user1.setUsername(user.getUsername());
         if (userMapper.selectOne(user1)!=null){
-            model.addAttribute("user",user);
-            return "forward:userAddJsp?msg=用户名已经存在";
+            return "用户名已经存在";
         }
-        return "forward:userAddJsp";
+        return "";
     }
     
     @RequestMapping("userData")

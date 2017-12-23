@@ -31,8 +31,8 @@ public class PrivilegeInterceptor implements HandlerInterceptor {
 		this.parseCurrentPrivilege(request);
 
 		// 取消拦截
-//		if (true)
-//			return true;
+		if (true)
+			return true;
 
 		// 添加无需验证的url、静态资源
 		String path = request.getRequestURI().toString();

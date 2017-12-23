@@ -24,20 +24,19 @@
 					</h1>
 					<br>
 					<h3>用户登录</h3>
-					<form action="/1/11/login" name="index.jsp" method="post" id="login_main">
+					<form class="layui-form" action="">
 						<div class="input_outer">
-							<span class="u_user"></span> <input name="username" class="text"
+							<span class="u_user"></span> <input name="username" class="text" lay-verify="required"
 								style="color: #FFFFFF !important" type="text"
 								placeholder="请输入账户" id="userName">
 						</div>
 						<div class="input_outer">
-							<span class="us_uer"></span> <input name="password" class="text"
+							<span class="us_uer"></span> <input name="password" class="text" lay-verify="required"
 								style="color: #FFFFFF !important" type="password"
 								placeholder="请输入密码">
 						</div>
 						<div class="mb2">
-							<input type="submit" class="act-but submit"
-								style="color: #FFFFFF; width: 100%" value="登陆">
+							<button type="button" class="act-but submit" lay-submit="" lay-filter="demo1" style="color: #FFFFFF; width: 100%">登陆</button>
 						</div>
 					</form>
 				</div>
@@ -49,13 +48,36 @@
 	<script src="js/EasePack.min.js"></script>
 	<script src="js/rAF.js"></script>
 	<script src="js/demo-1.js"></script>
-	<script type="text/JavaScript">
-		<c:if test="${!empty msg}">
-			window.onload=function(){
-				msg = "${msg}"
-				alert(msg);
-			}
-		</c:if>
+	<script>
+        //Demo
+        layui.use('form', function(){
+            var form = layui.form;
+
+            //监听提交
+            form.on('submit(demo1)', function (data) {
+                var url = '/1/11/login'
+                var json = JSON.stringify(data.field);
+                $.ajax({
+                    type: 'POST',
+                    contentType:"application/json",
+                    url: url,
+                    data: json,
+                    success: callback,
+					error: callbackError
+                });
+                return false;
+            });
+        });
+        function callback(data) {
+            window.location.href='/index';
+//            if (data != ""){
+//                layui.use('layer', function(){
+//                    var layer = layui.layer;
+//                    layer.msg(data);
+//                });
+//            }
+        }
+
 	</script>
 	<div style="text-align:center;">
 </div>

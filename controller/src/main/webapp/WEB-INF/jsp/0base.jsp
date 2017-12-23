@@ -9,4 +9,5 @@
 <link rel="stylesheet" href="../../css/layui.css" media="all">
 
 <script src="../../layui.js" charset="utf-8"></script>
+<script src="../../jquery.js" charset="utf-8"></script>
 <%-- <script language="javascript" src="${ctx}/js/common.js"></script> --%>
