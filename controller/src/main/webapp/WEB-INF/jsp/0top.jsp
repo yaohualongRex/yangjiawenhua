@@ -24,7 +24,7 @@
 	</a>
 		<dl class="layui-nav-child">
 			<dd>
-				<a href="1/11/userData">基本资料</a>
+				<a href="/1/11/userData">基本资料</a>
 			</dd>
 		</dl></li>
 	<li class="layui-nav-item"><a href="/1/11/loginOut">退了</a></li>
