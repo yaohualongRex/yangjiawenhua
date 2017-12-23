@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.yjwh.crm.po.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yjwh.crm.mapper.CustomMapper;
 import com.yjwh.crm.model.Custom;
 import com.yjwh.crm.po.CustomModle;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -38,16 +40,11 @@ public class CustomerController {
 	}
 	
 	@RequestMapping("22/selectCustom")
-	public void selectCustomer(HttpSession session, HttpServletRequest request , HttpServletResponse response,Model model) {
+	@ResponseBody
+	public Object selectCustomer(HttpSession session, HttpServletRequest request , HttpServletResponse response,Model model) {
 		Map<Object,Object> map  = new HashMap<Object,Object>();
 		List<Custom> customList = customerMapper.selectAll();
-		 JSONArray jsonArray = new JSONArray();
-		 for (Object object : customList) {
-			 jsonArray.add(object);
-		}
-		 map.put("data", jsonArray);
-		 String jsonObject = JSONObject.toJSONString(map);
-		 model.addAttribute("idTest",jsonObject);
+		return new Response<Custom>(customList);
 	}
 	
 	@RequestMapping("22/addCustomJsp")

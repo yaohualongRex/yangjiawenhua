@@ -29,9 +29,6 @@
 
         <div class="layui-body">
 
-            <blockquote class="layui-elem-quote layui-text">
-                该页面所有项目都为必填项目
-            </blockquote>
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>新增员工</legend>
             </fieldset>
@@ -45,7 +42,6 @@
                                    class="layui-input" type="text">
                         </div>
                     </div>
-
                     <div class="layui-form-item">
                         <label class="layui-form-label">密码</label>
                         <div class="layui-input-inline">
@@ -54,7 +50,6 @@
                         </div>
                         <div class="layui-form-mid layui-word-aux"></div>
                     </div>
-
                     <div class="layui-form-item">
                         <label class="layui-form-label">姓名</label>
                         <div class="layui-input-inline">
@@ -62,7 +57,6 @@
                                    class="layui-input" type="text">
                         </div>
                     </div>
-
                     <div class="layui-form-item">
                         <label class="layui-form-label">用户角色</label>
                         <div class="layui-input-inline">
@@ -77,6 +71,13 @@
                         <div class="layui-input-block">
                             <input name="sex" value="男" title="男" type="radio" <c:if test='${user.sex eq "男" || user.sex eq "" || user.sex eq null}'>checked=""</c:if> >
                             <input name="sex" value="女" title="女" type="radio" <c:if test='${user.sex eq "女" }'>checked=""</c:if> >
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">员工编号</label>
+                        <div class="layui-input-inline">
+                            <input name="userNo" lay-verify="required" placeholder="请输入员工编号" autocomplete="off" value="${user.userNo}"
+                                   class="layui-input" type="text">
                         </div>
                     </div>
                     <div class="layui-form-item">
