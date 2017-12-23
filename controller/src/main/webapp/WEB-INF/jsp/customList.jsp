@@ -42,8 +42,8 @@
 			  <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
 			  <button class="layui-btn" data-type="isAll">验证是否全选</button>
 			</div>
-			 
-			<table class="layui-table" lay-data="{width: 892, height:332, url:'/demo/table/user/', page:true, id:'idTest'}" lay-filter="demo">
+			
+			<table class="layui-table" lay-data="{width: 892, height:332, url:'/2/22/selectCustom', page:true, id:'idTest'}" lay-filter="demo">
 			  <thead>
 			    <tr>
 			      <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
