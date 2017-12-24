@@ -145,8 +145,13 @@
                 else{
                     layer.confirm('真的删除这些用户么么', function (index) {
                         var url = '/1/11/deleteUser'
-                        var json = JSON.stringify(data)
-                        window.location.href=url+'?userses='+json
+                        var ids = '';
+                        for (i=0;i<data.length;i++){
+                            ids+=data[i].id+","
+                        }
+                        ids = ids.substr(0,ids.length-1)
+                        alert(ids)
+                        window.location.href=url+'?ids='+ids
                     });
                 }
 

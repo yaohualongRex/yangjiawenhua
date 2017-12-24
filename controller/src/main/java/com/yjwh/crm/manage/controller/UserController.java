@@ -66,16 +66,17 @@ public class UserController {
     }
     @RequestMapping("/deleteUser")
     @Transactional
-    public String deleteUser(String userses) {
-        List<User> users = JSON.parseArray(userses, User.class);
-        users.forEach(user -> {
-            userMapper.deleteByPrimaryKey(user.getId());
+    public String deleteUser(String ids) {
+        String[] split = ids.split(",");
+        List<Long> users = JSON.parseArray(JSON.toJSONString(split), Long.class);
+        users.forEach(id -> {
+            userMapper.deleteByPrimaryKey(id);
             UserRole userRole = new UserRole();
-            userRole.setUserId(user.getId());
+            userRole.setUserId(id);
             userRole = userRoleMapper.selectOne(userRole);
             userRoleMapper.deleteByPrimaryKey(userRole.getId());
         });
-        return "/1/11/userListJsp";
+        return "redirect:/1/11/userListJsp";
     }
     @RequestMapping("/updateUser")
     @ResponseBody
