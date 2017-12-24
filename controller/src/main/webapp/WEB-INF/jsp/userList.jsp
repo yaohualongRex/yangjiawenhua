@@ -150,7 +150,6 @@
                             ids+=data[i].id+","
                         }
                         ids = ids.substr(0,ids.length-1)
-                        alert(ids)
                         window.location.href=url+'?ids='+ids
                     });
                 }
