@@ -10258,3 +10258,27 @@ function callbackError(data) {
         layer.msg(JSON.parse(json).responseJSON.message);
     }
 };
+function callbackOpen(data) {
+    if (data != "") {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.msg(data);
+        });
+    }
+    var index = parent.layer.getFrameIndex(window.name);
+    setTimeout(function(){
+        parent.layer.close(index)
+    }, 1000);
+}
+
+function callback(data) {
+    if (data != "") {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.msg(data);
+        });
+    }
+    setTimeout(function(){
+    }, 1000);
+    window.location.reload;
+}

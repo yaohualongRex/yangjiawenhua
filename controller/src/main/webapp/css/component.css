@@ -33,6 +33,10 @@
 	margin-left: -200px;
 	margin-top: -250px;
 }
+.center{
+	width: 400px;
+	margin: 20px auto;
+}
 .logo_box2{
 	width: 500px;
 	height: 500px;
