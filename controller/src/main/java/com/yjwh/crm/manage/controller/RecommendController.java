@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Administrator
  *
  */
+@Controller
 @RequestMapping("6")
 public class RecommendController {
 
@@ -20,7 +22,7 @@ public class RecommendController {
         return "recommendAdd";
     }
 	
-	@RequestMapping("61/selectRecommendJsp")
+	@RequestMapping("62/selectRecommendJsp")
 	public String selectCustomerjsp(HttpSession session, HttpServletRequest request , HttpServletResponse response,Model model) {
 		return "recommendList";
 	}
