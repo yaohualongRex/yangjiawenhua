@@ -26,14 +26,14 @@
                 </ul>
             </div>
         </div>
-<br>
-<br>
+
         <div class="layui-body">
 
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                <legend>客户信息录入</legend>
+                <legend>推荐费信息录入</legend>
             </fieldset>
-
+<br>
+<br>
             <div class="logo_box1">
                 <form class="layui-form layui-form-pane" action="/2/21/addCustom" method="post">
                 	<div class="layui-form-item">
