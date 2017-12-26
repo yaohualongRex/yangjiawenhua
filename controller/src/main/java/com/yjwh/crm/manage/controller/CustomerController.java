@@ -34,7 +34,7 @@ public class CustomerController {
 	 @Autowired
 	 private CustomMapper customerMapper;
 	 
-	@RequestMapping("22/selectCustomJsp")
+	@RequestMapping("21/selectCustomJsp")
 	public String selectCustomerjsp(HttpSession session, HttpServletRequest request , HttpServletResponse response,Model model) {
 		return "customList";
 	}

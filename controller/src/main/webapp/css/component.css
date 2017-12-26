@@ -33,6 +33,20 @@
 	margin-left: -200px;
 	margin-top: -250px;
 }
+.center{
+	width: 400px;
+	margin: 20px auto;
+}
+.logo_box2{
+	width: 500px;
+	height: 500px;
+	padding: 35px;
+	position: absolute;
+	left: 50%;
+	top:50%;
+	margin-left: -200px;
+	margin-top: -250px;
+}
 .logo_box h3{
 	text-align: center;
 	height: 20px;

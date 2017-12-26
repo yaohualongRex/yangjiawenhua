@@ -29,18 +29,15 @@ public class PrivilegeInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
 		// 解析url中当前使用的是哪部分权限，并根据当前权限尝试获取按钮
 		this.parseCurrentPrivilege(request);
-
-		// 取消拦截
-//		if (true)
-//			return true;
+		this.parseUrl(request);
 
 		// 添加无需验证的url、静态资源
 		String path = request.getRequestURI().toString();
-		if (path.contains("/login") || path.equals("/") || path.endsWith(".jpg"))
+		if (path.equals("/login") || path.equals("/") || path.equals("/error")
+				|| path.endsWith(".jpg") )
 			return true;
 
-		// 登录校验
-		// session中没有保存该用户权限，重定向到登录界面
+		// 登录校验:session中没有保存该用户权限，重定向到登录界面
 		HttpSession session = request.getSession();
 		if (session.getAttribute("currentUser")==null) {//没有保存当前用户就是没有登陆
 			response.sendRedirect("/");
@@ -49,8 +46,11 @@ public class PrivilegeInterceptor implements HandlerInterceptor {
 		if (session.getAttribute("privileges")==null) // 有用户没权限，再查一遍权限
 			session.setAttribute("privileges", privilegeService.getUsersAllPrivileges((User) session.getAttribute("currentUser")));
 
-			
 		return true;
+	}
+
+	private void parseUrl(HttpServletRequest request) {
+		request.setAttribute("hostIp",request.getRequestURL().toString().split(request.getRequestURI())[0]);
 	}
 
 	@Override
@@ -84,9 +84,6 @@ public class PrivilegeInterceptor implements HandlerInterceptor {
 		}
 		pid = 11l;
 		if (pid != null){// 尝试获取按钮
-			WebApplicationContext  webApplicationContext
-					= (WebApplicationContext) request.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-			privilegeService = (PrivilegeService) webApplicationContext .getBean("privilegeService");
 			List<Privilege> buttons = privilegeService.selectButtonsByPid(pid);
 			if (!CollectionUtils.isEmpty(buttons))
 				request.setAttribute("buttons",buttons);

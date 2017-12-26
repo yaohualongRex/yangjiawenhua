@@ -40,21 +40,23 @@
             <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
             <button class="layui-btn" data-type="isAll">验证是否全选</button>
         </div>
-
-        <table class="layui-table" lay-data="{width: 892, height:332, url:'/2/22/selectCustom', page:true, id:'idTest'}"
-               lay-filter="demo">
-            <thead>
-            <tr>
-                <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-                <th lay-data="{field:'chinaName', width:80, sort: true, fixed: true}">客户姓名</th>
-                <th lay-data="{field:'phoneNo', width:80}">客户联系电话</th>
-                <th lay-data="{field:'unitName', width:80, sort: true}">客户单位名称</th>
-                <th lay-data="{field:'profession', width:80}">客户专业</th>
-                <th lay-data="{field:'userChinaName', width:160}">业务负责人</th>
-                <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
-            </tr>
-            </thead>
-        </table>
+        <%----%>
+        <%--<table class="layui-table" lay-data="{width: 1150, height:332, url:'/5/52/selectPublicBill', page:true, id:'idTest'}" lay-filter="demo">--%>
+        <%--<thead>--%>
+        <%--<tr>--%>
+        <%--<th lay-data="{type:'checkbox', fixed: 'left'}"></th>--%>
+        <%--<th lay-data="{field:'type', width:100, sort: true, fixed: true}">发票类型</th>--%>
+        <%--<th lay-data="{field:'head', width:210, sort: true}">发票抬头</th>--%>
+        <%--<th lay-data="{field:'unit'}">单位名称</th>--%>
+        <%--<th lay-data="{field:'project', width:120}">业务项目</th>--%>
+        <%--<th lay-data="{field:'amount', width:100}">发票金额</th>--%>
+        <%--<th lay-data="{field:'userName', width:80}">申请人</th>--%>
+        <%--<th lay-data="{field:'createTime', width:110}">申请日期</th>--%>
+        <%--<th lay-data="{field:'status', width:80}">状态</th>--%>
+        <%--<th lay-data="{fixed: 'right',width:120, align:'center', toolbar: '#barDemo'}">操作</th>--%>
+        <%--</tr>--%>
+        <%--</thead>--%>
+        <%--</table>--%>
     </div>
 
     <div class="layui-footer">
@@ -62,9 +64,13 @@
     </div>
 </div>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="detail">查单</a>
+    <a class="layui-btn layui-btn-xs" lay-event="detail">详情</a>
+    {{#  if(d.status == "待审核"){ }}
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">修改</a>
+    {{#  } }}
 </script>
+
+
 <script>
     layui.use('table', function () {
         var table = layui.table;
