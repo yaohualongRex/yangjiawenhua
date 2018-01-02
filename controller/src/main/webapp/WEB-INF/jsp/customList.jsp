@@ -25,7 +25,6 @@
 
     <!-- start 内容主体区域 -->
     <div class="layui-body">
-
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
             <legend>客户信息查询</legend>
         </fieldset>
@@ -36,35 +35,37 @@
         </div>
 
         <div class="layui-btn-group demoTable">
-            <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
-            <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-            <button class="layui-btn" data-type="isAll">验证是否全选</button>
+            <%@include file="0buttons.jsp" %>
         </div>
 
-        <table class="layui-table" lay-data="{width: 892, height:332, url:'/2/22/selectCustom', page:true, id:'idTest'}"
+        <table class="layui-table"
+               lay-data="{width: 1150, height:332, url:'/2/22/selectCustom', page:true, id:'idTest'}"
                lay-filter="demo">
             <thead>
             <tr>
                 <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-                <th lay-data="{field:'chinaName', width:80, sort: true, fixed: true}">客户姓名</th>
-                <th lay-data="{field:'phoneNo', width:80}">客户联系电话</th>
-                <th lay-data="{field:'unitName', width:80, sort: true}">客户单位名称</th>
-                <th lay-data="{field:'profession', width:80}">客户专业</th>
+                <th lay-data="{field:'chinaName', width:200, sort: true, fixed: true}">客户姓名</th>
+                <th lay-data="{field:'phoneNo', width:200}">客户联系电话</th>
+                <th lay-data="{field:'unitName', width:200, sort: true}">客户单位名称</th>
+                <th lay-data="{field:'profession', width:200}">客户专业</th>
                 <th lay-data="{field:'userChinaName', width:160}">业务负责人</th>
-                <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
+                <th lay-data="{fixed: 'right', width:150, align:'center', toolbar: '#barDemo'}">操作</th>
             </tr>
             </thead>
         </table>
+
     </div>
 
     <div class="layui-footer">
         © yangjiawenhua.com - 底部固定区域
     </div>
 </div>
+<%-- start 工具栏 --%>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="detail">查单</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-xs" lay-event="del">删除</a>
 </script>
+<%-- end 工具栏 --%>
 <script>
     layui.use('table', function () {
         var table = layui.table;
@@ -83,33 +84,84 @@
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-                layer.alert('编辑行：<br>' + JSON.stringify(data))
+                layer.open({
+                    type: 2,
+                    title: '展示详情',
+                    shadeClose: true,
+                    shade: 0.8,
+                    offset: '50px',
+                    area: ['50%', '90%'],
+                    moveOut: true,
+                    content: '${hostIp}/'
+                });
             }
         });
 
         var $ = layui.$, active = {
-            getCheckData: function () { //获取选中数据
+            add: function () { //获取选中数据
+//                var checkStatus = table.checkStatus('idTest')
+//                    , data = checkStatus.data;
+//                layer.alert(JSON.stringify(data));
+                layer.open({
+                    type: 2,
+                    title: '添加客户',
+                    shadeClose: true,
+                    shade: 0.8,
+                    offset: '50px',
+                    area: ['50%', '90%'],
+                    moveOut: true,
+                    content: '${hostIp}/2/22/addCustomJsp',
+                    end: function () {
+                        location.reload();
+                    }
+                });
+            }
+            , update: function () { //获取选中数目
                 var checkStatus = table.checkStatus('idTest')
                     , data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
+                if(data.length != 1)
+                    layer.msg('请选中一条数据');
+                else{
+                    layer.open({
+                        type: 2,
+                        title: '编辑用户',
+                        shadeClose: true,
+                        shade: 0.8,
+                        offset: '50px',
+                        area: ['50%', '90%'],
+                        moveOut: true,
+                        content: '${hostIp}/1/11/userUpdateJsp?id='+data[0].id,
+                        end: function () {
+                            location.reload();
+                        }
+                    });
+                }
             }
-            , getCheckLength: function () { //获取选中数目
+            , delete: function () {
                 var checkStatus = table.checkStatus('idTest')
                     , data = checkStatus.data;
-                layer.msg('选中了：' + data.length + ' 个');
-            }
-            , isAll: function () { //验证是否全选
-                var checkStatus = table.checkStatus('idTest');
-                layer.msg(checkStatus.isAll ? '全选' : '未全选')
+                if(data.length == 0)
+                    layer.msg('请选中至少一条数据');
+                else{
+                    layer.confirm('真的删除这些用户么么', function (index) {
+                        var url = '/2/22/delCustom'
+                        var ids = '';
+                        for (i=0;i<data.length;i++){
+                            ids+=data[i].id+","
+                        }
+                        ids = ids.substr(0,ids.length-1)
+                        window.location.href=url+'?ids='+ids
+                    });
+                }
+
             }
         };
-
         $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
+
     });
 </script>
-</div>
 </body>
 </html>

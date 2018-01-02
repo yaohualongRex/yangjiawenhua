@@ -55,9 +55,9 @@
                     <label class="layui-form-label">员工性别</label>
                     <div class="layui-input-block">
                         <input name="sex" value="男" title="男" type="radio"
-                               <c:if test='${currentUser.sex eq "男" || currentUser.sex eq "" || currentUser.sex eq null}'>checked=""</c:if> >
+                               <c:if test='${currentUser.sex eq "1" || currentUser.sex eq "" || currentUser.sex eq null}'>checked=""</c:if> >
                         <input name="sex" value="女" title="女" type="radio"
-                               <c:if test='${currentUser.sex eq "女" }'>checked=""</c:if> >
+                               <c:if test='${currentUser.sex eq "2" }'>checked=""</c:if> >
                     </div>
                 </div>
                 <div class="layui-form-item">
