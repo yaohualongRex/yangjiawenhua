@@ -1,5 +1,7 @@
 package com.yjwh.crm.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,7 +16,12 @@ public class Book {
 	@Column(name = "book_name")
     private String bookName;
 	@Column(name = "create_time")
+    @JSONField(format="yyyy-MM-dd")
     private Date createTime;
+    @Column(name = "status")
+    private String status;
+    @Column(name = "type")
+    private Integer type;//图书类型：1合作图书，2自费图书
 	@Column(name = "a_1")
     private Long a1;
 	@Column(name = "a_2")
@@ -75,6 +82,22 @@ public class Book {
     private Long c15;
     @Column(name = "book_info_id")
     private Long bookInfoId;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
     public Long getId() {
         return id;
