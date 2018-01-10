@@ -1,6 +1,7 @@
 package com.yjwh.crm.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.yjwh.crm.enums.BookStatusEnum;
 
 import java.util.Date;
 
@@ -8,8 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "book")
-public class Book {
+@Table(name = "union_book")
+public class UnionBook {
 	@Id
 	@Column(name = "id")
     private Long id;
@@ -82,6 +83,296 @@ public class Book {
     private Long c15;
     @Column(name = "book_info_id")
     private Long bookInfoId;
+    @Column(name = "a1s")
+    private String a1s;
+    @Column(name = "a2s")
+    private String a2s;
+    @Column(name = "a3s")
+    private String a3s;
+    @Column(name = "a4s")
+    private String a4s;
+    @Column(name = "a5s")
+    private String a5s;
+    @Column(name = "a6s")
+    private String a6s;
+    @Column(name = "b1s")
+    private String b1s;
+    @Column(name = "b2s")
+    private String b2s;
+    @Column(name = "b3s")
+    private String b3s;
+    @Column(name = "b4s")
+    private String b4s;
+    @Column(name = "b5s")
+    private String b5s;
+    @Column(name = "b6s")
+    private String b6s;
+    @Column(name = "b7s")
+    private String b7s;
+    @Column(name = "b8s")
+    private String b8s;
+    @Column(name = "c1s")
+    private String c1s;
+    @Column(name = "c2s")
+    private String c2s;
+    @Column(name = "c3s")
+    private String c3s;
+    @Column(name = "c4s")
+    private String c4s;
+    @Column(name = "c5s")
+    private String c5s;
+    @Column(name = "c6s")
+    private String c6s;
+    @Column(name = "c7s")
+    private String c7s;
+    @Column(name = "c8s")
+    private String c8s;
+    @Column(name = "c9s")
+    private String c9s;
+    @Column(name = "c10s")
+    private String c10s;
+    @Column(name = "c11s")
+    private String c11s;
+    @Column(name = "c12s")
+    private String c12s;
+    @Column(name = "c13s")
+    private String c13s;
+    @Column(name = "c14s")
+    private String c14s;
+    @Column(name = "c15s")
+    private String c15s;
+
+    public String getA1s() {
+        return a1s;
+    }
+
+    public void setA1s(String a1s) {
+        this.a1s = a1s;
+    }
+
+    public String getA2s() {
+        return a2s;
+    }
+
+    public void setA2s(String a2s) {
+        this.a2s = a2s;
+    }
+
+    public String getA3s() {
+        return a3s;
+    }
+
+    public void setA3s(String a3s) {
+        this.a3s = a3s;
+    }
+
+    public String getA4s() {
+        return a4s;
+    }
+
+    public void setA4s(String a4s) {
+        this.a4s = a4s;
+    }
+
+    public String getA5s() {
+        return a5s;
+    }
+
+    public void setA5s(String a5s) {
+        this.a5s = a5s;
+    }
+
+    public String getA6s() {
+        return a6s;
+    }
+
+    public void setA6s(String a6s) {
+        this.a6s = a6s;
+    }
+
+    public String getB1s() {
+        return b1s;
+    }
+
+    public void setB1s(String b1s) {
+        this.b1s = b1s;
+    }
+
+    public String getB2s() {
+        return b2s;
+    }
+
+    public void setB2s(String b2s) {
+        this.b2s = b2s;
+    }
+
+    public String getB3s() {
+        return b3s;
+    }
+
+    public void setB3s(String b3s) {
+        this.b3s = b3s;
+    }
+
+    public String getB4s() {
+        return b4s;
+    }
+
+    public void setB4s(String b4s) {
+        this.b4s = b4s;
+    }
+
+    public String getB5s() {
+        return b5s;
+    }
+
+    public void setB5s(String b5s) {
+        this.b5s = b5s;
+    }
+
+    public String getB6s() {
+        return b6s;
+    }
+
+    public void setB6s(String b6s) {
+        this.b6s = b6s;
+    }
+
+    public String getB7s() {
+        return b7s;
+    }
+
+    public void setB7s(String b7s) {
+        this.b7s = b7s;
+    }
+
+    public String getB8s() {
+        return b8s;
+    }
+
+    public void setB8s(String b8s) {
+        this.b8s = b8s;
+    }
+
+    public String getC1s() {
+        return c1s;
+    }
+
+    public void setC1s(String c1s) {
+        this.c1s = c1s;
+    }
+
+    public String getC2s() {
+        return c2s;
+    }
+
+    public void setC2s(String c2s) {
+        this.c2s = c2s;
+    }
+
+    public String getC3s() {
+        return c3s;
+    }
+
+    public void setC3s(String c3s) {
+        this.c3s = c3s;
+    }
+
+    public String getC4s() {
+        return c4s;
+    }
+
+    public void setC4s(String c4s) {
+        this.c4s = c4s;
+    }
+
+    public String getC5s() {
+        return c5s;
+    }
+
+    public void setC5s(String c5s) {
+        this.c5s = c5s;
+    }
+
+    public String getC6s() {
+        return c6s;
+    }
+
+    public void setC6s(String c6s) {
+        this.c6s = c6s;
+    }
+
+    public String getC7s() {
+        return c7s;
+    }
+
+    public void setC7s(String c7s) {
+        this.c7s = c7s;
+    }
+
+    public String getC8s() {
+        return c8s;
+    }
+
+    public void setC8s(String c8s) {
+        this.c8s = c8s;
+    }
+
+    public String getC9s() {
+        return c9s;
+    }
+
+    public void setC9s(String c9s) {
+        this.c9s = c9s;
+    }
+
+    public String getC10s() {
+        return c10s;
+    }
+
+    public void setC10s(String c10s) {
+        this.c10s = c10s;
+    }
+
+    public String getC11s() {
+        return c11s;
+    }
+
+    public void setC11s(String c11s) {
+        this.c11s = c11s;
+    }
+
+    public String getC12s() {
+        return c12s;
+    }
+
+    public void setC12s(String c12s) {
+        this.c12s = c12s;
+    }
+
+    public String getC13s() {
+        return c13s;
+    }
+
+    public void setC13s(String c13s) {
+        this.c13s = c13s;
+    }
+
+    public String getC14s() {
+        return c14s;
+    }
+
+    public void setC14s(String c14s) {
+        this.c14s = c14s;
+    }
+
+    public String getC15s() {
+        return c15s;
+    }
+
+    public void setC15s(String c15s) {
+        this.c15s = c15s;
+    }
 
     public String getStatus() {
         return status;

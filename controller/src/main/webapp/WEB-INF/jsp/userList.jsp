@@ -62,8 +62,9 @@
 </div>
 <%-- start 工具栏 --%>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">修改</a>
-    <a class="layui-btn layui-btn-xs" lay-event="del">删除</a>
+    {{#  if(d.auth > 2){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="check">录入新订单</a>
+    {{#  } }}
 </script>
 <%-- end 工具栏 --%>
 <script>

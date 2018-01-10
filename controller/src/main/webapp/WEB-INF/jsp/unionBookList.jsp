@@ -52,37 +52,37 @@
                 <th lay-data="{fixed: 'right', align:'center', toolbar: '#barDemo'}" rowspan="2">操作</th>
             </tr>
             <tr>
-                <th lay-data="{field:'a1', sort: false}">1</th>
-                <th lay-data="{field:'a2', sort: false}">2</th>
-                <th lay-data="{field:'a3', sort: false}">3</th>
-                <th lay-data="{field:'a4', sort: false}">4</th>
-                <th lay-data="{field:'a5', sort: false}">5</th>
-                <th lay-data="{field:'a6', sort: false}">6</th>
+                <th lay-data="{field:'a1s', sort: false}">1</th>
+                <th lay-data="{field:'a2s', sort: false}">2</th>
+                <th lay-data="{field:'a3s', sort: false}">3</th>
+                <th lay-data="{field:'a4s', sort: false}">4</th>
+                <th lay-data="{field:'a5s', sort: false}">5</th>
+                <th lay-data="{field:'a6s', sort: false}">6</th>
 
-                <th lay-data="{field:'b1', sort: false}">1</th>
-                <th lay-data="{field:'b2', sort: false}">2</th>
-                <th lay-data="{field:'b3', sort: false}">3</th>
-                <th lay-data="{field:'b4', sort: false}">4</th>
-                <th lay-data="{field:'b5', sort: false}">5</th>
-                <th lay-data="{field:'b6', sort: false}">6</th>
-                <th lay-data="{field:'b7', sort: false}">7</th>
-                <th lay-data="{field:'b8', sort: false}">8</th>
+                <th lay-data="{field:'b1s', sort: false}">1</th>
+                <th lay-data="{field:'b2s', sort: false}">2</th>
+                <th lay-data="{field:'b3s', sort: false}">3</th>
+                <th lay-data="{field:'b4s', sort: false}">4</th>
+                <th lay-data="{field:'b5s', sort: false}">5</th>
+                <th lay-data="{field:'b6s', sort: false}">6</th>
+                <th lay-data="{field:'b7s', sort: false}">7</th>
+                <th lay-data="{field:'b8s', sort: false}">8</th>
 
-                <th lay-data="{field:'c1', sort: false}">1</th>
-                <th lay-data="{field:'c2', sort: false}">2</th>
-                <th lay-data="{field:'c3', sort: false}">3</th>
-                <th lay-data="{field:'c4', sort: false}">4</th>
-                <th lay-data="{field:'c5', sort: false}">5</th>
-                <th lay-data="{field:'c6', sort: false}">6</th>
-                <th lay-data="{field:'c7', sort: false}">7</th>
-                <th lay-data="{field:'c8', sort: false}">8</th>
-                <th lay-data="{field:'c9', sort: false}">9</th>
-                <th lay-data="{field:'c10', sort: false}">10</th>
-                <th lay-data="{field:'c11', sort: false}">11</th>
-                <th lay-data="{field:'c12', sort: false}">12</th>
-                <th lay-data="{field:'c13', sort: false}">13</th>
-                <th lay-data="{field:'c14', sort: false}">14</th>
-                <th lay-data="{field:'c15', sort: false}">15</th>
+                <th lay-data="{field:'c1s', sort: false}">1</th>
+                <th lay-data="{field:'c2s', sort: false}">2</th>
+                <th lay-data="{field:'c3s', sort: false}">3</th>
+                <th lay-data="{field:'c4s', sort: false}">4</th>
+                <th lay-data="{field:'c5s', sort: false}">5</th>
+                <th lay-data="{field:'c6s', sort: false}">6</th>
+                <th lay-data="{field:'c7s', sort: false}">7</th>
+                <th lay-data="{field:'c8s', sort: false}">8</th>
+                <th lay-data="{field:'c9s', sort: false}">9</th>
+                <th lay-data="{field:'c10s', sort: false}">10</th>
+                <th lay-data="{field:'c11s', sort: false}">11</th>
+                <th lay-data="{field:'c12s', sort: false}">12</th>
+                <th lay-data="{field:'c13s', sort: false}">13</th>
+                <th lay-data="{field:'c14s', sort: false}">14</th>
+                <th lay-data="{field:'c15s', sort: false}">15</th>
             </tr>
             </thead>
         </table>

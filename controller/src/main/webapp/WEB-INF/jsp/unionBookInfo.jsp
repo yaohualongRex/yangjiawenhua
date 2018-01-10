@@ -68,10 +68,27 @@
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                 <legend>参编位置信息</legend>
             </fieldset>
+            <table class="layui-table"
+                   lay-data="{url:'/3/31/selectOrders?bookId=${book.id}', page:true, id:'idTest'}"
+                   lay-filter="demo">
+                <thead>
+                <tr>
+                    <th lay-data="{field:'userNo', width:200, sort: true, fixed: true}">位置信息</th>
+                    <th lay-data="{field:'username', width:200, sort: true}">姓名</th>
+                    <th lay-data="{field:'chinaName', width:200, sort: true}">详细信息</th>
+                    <th lay-data="{field:'position', width:200}">推荐费信息</th>
+                    <th lay-data="{field:'sex'}">备注</th>
+                    <th lay-data="{field:'sex'}">销售员</th>
+                    <th lay-data="{fixed: 'right',width:120, align:'center', toolbar: '#barDemo'}">操作</th>
+                </tr>
+                </thead>
+            </table>
         </div>
     </div>
 </div>
-
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="del">删除</a>
+</script>
 <script>
     layui.use(['form', 'layedit', 'laydate'], function () {
         var form = layui.form

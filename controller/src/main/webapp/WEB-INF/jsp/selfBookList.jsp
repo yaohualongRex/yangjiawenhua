@@ -39,42 +39,16 @@
         </div>
 
         <table class="layui-table"
-               lay-data="{width: 1150, height:332, url:'/3/32/selectSelfBook', page:true, id:'idTest'}"
+               lay-data="{ url:'/3/32/selectSelfBook', page:true, id:'idTest'}"
                lay-filter="demo">
             <thead>
             <tr>
-                <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-                <th lay-data="{field:'bookName', width:200, sort: true, fixed: true}">书名</th>
-                <th lay-data="{field:'createTime', width:200, sort: true}">出版日期</th>
-                <th lay-data="{field:'a1', sort: false}">主1</th>
-                <th lay-data="{field:'a2', sort: false}">主2</th>
-                <th lay-data="{field:'a3', sort: false}">主3</th>
-                <th lay-data="{field:'a4', sort: false}">主4</th>
-                <th lay-data="{field:'a5', sort: false}">主5</th>
-                <th lay-data="{field:'a6', sort: false}">主6</th>
-                <th lay-data="{field:'b1', sort: false}">副1</th>
-                <th lay-data="{field:'b2', sort: false}">副2</th>
-                <th lay-data="{field:'b3', sort: false}">副3</th>
-                <th lay-data="{field:'b4', sort: false}">副4</th>
-                <th lay-data="{field:'b5', sort: false}">副5</th>
-                <th lay-data="{field:'b6', sort: false}">副6</th>
-                <th lay-data="{field:'b7', sort: false}">副7</th>
-                <th lay-data="{field:'b8', sort: false}">副8</th>
-                <th lay-data="{field:'c1', sort: false}">参1</th>
-                <th lay-data="{field:'c2', sort: false}">参2</th>
-                <th lay-data="{field:'c3', sort: false}">参3</th>
-                <th lay-data="{field:'c4', sort: false}">参4</th>
-                <th lay-data="{field:'c5', sort: false}">参5</th>
-                <th lay-data="{field:'c6', sort: false}">参6</th>
-                <th lay-data="{field:'c7', sort: false}">参7</th>
-                <th lay-data="{field:'c8', sort: false}">参8</th>
-                <th lay-data="{field:'c9', sort: false}">参9</th>
-                <th lay-data="{field:'c10', sort: false}">参10</th>
-                <th lay-data="{field:'c11', sort: false}">参11</th>
-                <th lay-data="{field:'c12', sort: false}">参12</th>
-                <th lay-data="{field:'c13', sort: false}">参13</th>
-                <th lay-data="{field:'c14', sort: false}">参14</th>
-                <th lay-data="{field:'c15', sort: false}">参15</th>
+                <th lay-data="{type:'checkbox', fixed: 'left'}" ></th>
+                <th lay-data="{field:'bookName',  sort: true, fixed: true, templet: '#bookName'}"  >书名</th>
+                <th lay-data="{field:'publicTime', sort: true}" >出版日期</th>
+                <th lay-data="{field:'publicer'}" >出版社</th>
+                <th lay-data="{align:'center', toolbar: '#barDemo'}" rowspan="2">订单详情</th>
+                <th lay-data="{field:'status'}">图书状态</th>
             </tr>
             </thead>
         </table>
@@ -85,7 +59,27 @@
         © yangjiawenhua.com - 底部固定区域
     </div>
 </div>
+<%-- start 工具栏 --%>
+<script type="text/html" id="bookName">
+    <a href="" class="layui-table-link" target="_blank" onclick="info({{d.id}});return false">{{ d.bookName }}</a>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+</script>
+<%-- end 工具栏 --%>
 <script>
+    function info(obj) {
+        layer.open({
+            type: 2,
+            title: '合作图书信息',
+            shadeClose: true,
+            shade: 0.8,
+            offset: '50px',
+            area: ['50%', '90%'],
+            moveOut: true,
+            content: '${hostIp}/3/31/selectUnionBookInfo?bookId='+obj,
+        });
+    }
     layui.use('table', function () {
         var table = layui.table;
         //监听表格复选框选择
