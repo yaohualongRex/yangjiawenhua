@@ -11,112 +11,232 @@
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
+    <!-- start 头部区域 -->
     <div class="layui-header">
-        <div class="layui-logo">
-            <font size="4"><B>阳夏文化图书管理系统</B></font>
-        </div>
         <%@include file="0top.jsp" %>
+    </div>
+    <!-- end 头部区域 -->
 
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed"><a href="">公告栏</a></li>
-                    <%@include file="0left.jsp" %>
-                </ul>
+    <!-- start 左侧导航区域 -->
+    <div class="layui-side layui-bg-black">
+        <%@include file="0left.jsp" %>
+    </div>
+    <!-- end 左侧导航区域 -->
+
+    <!-- start 内容主体区域 -->
+    <div class="layui-body">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>${typeName}订单管理</legend>
+        </fieldset>
+        <div style="margin-bottom: 5px;">
+            <!-- 示例-970 -->
+            <ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px"
+                 data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
+        </div>
+
+        <div class="layui-btn-group demoTable">
+            <%@include file="0buttons.jsp" %>
+        </div>
+
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this">已完成订单</li>
+                <li>未完成订单</li>
+                <li>已取消订单</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-table"
+                           lay-data="{url:'/4/${type}/selectFinishOrder', page:true, id:'idTest1'}"
+                           lay-filter="demo">
+                        <%@include file="orderFields.jsp" %>
+                    </table>
+                </div>
+                <div class="layui-tab-item">
+                    <table class="layui-table"
+                           lay-data="{url:'/4/${type}/selectActiveOrder', page:true, id:'idTest2'}"
+                           lay-filter="demo">
+                        <%@include file="orderFields.jsp" %>
+                    </table>
+                </div>
+                <div class="layui-tab-item">
+                    <table class="layui-table"
+                           lay-data="{url:'/4/${type}/selectCancelOrder', page:true, id:'idTest3'}"
+                           lay-filter="demo">
+                        <%@include file="orderFields.jsp" %>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <div class="layui-body">
-
-            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                <legend>客户信息查询</legend>
-            </fieldset>
-			<div style="margin-bottom: 5px;">          
-				<!-- 示例-970 -->
-				<ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
-			</div>
-			 
-			<div class="layui-btn-group demoTable">
-			  <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
-			  <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-			  <button class="layui-btn" data-type="isAll">验证是否全选</button>
-			</div>
-			
-			<table class="layui-table" lay-data="{width: 892, height:332, url:'/2/22/selectCustom', page:true, id:'idTest'}" lay-filter="demo">
-			  <thead>
-			    <tr>
-			      <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-			      <th lay-data="{field:'chinaName', width:80, sort: true, fixed: true}">客户姓名</th>
-			      <th lay-data="{field:'phoneNo', width:80}">客户联系电话</th>
-			      <th lay-data="{field:'unitName', width:80, sort: true}">客户单位名称</th>
-			      <th lay-data="{field:'profession', width:80}">客户专业</th>
-			      <th lay-data="{field:'userChinaName', width:160}">业务负责人</th>
-			      <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
-			    </tr>
-			  </thead>
-			</table>
-        </div>
-
-        <div class="layui-footer">
-            <!-- 底部固定区域 -->
-            © yangjiawenhua.com - 底部固定区域
-        </div>
     </div>
-    <script src="../../layui.js"></script>
-    <script type="text/html" id="barDemo">
-  		<a class="layui-btn layui-btn-xs" lay-event="detail">查单</a>
-  		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">修改</a>
-	</script>
-               
-          
-<script src="../../layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-<script>
-	layui.use('table', function(){
-	  var table = layui.table;
-	  //监听表格复选框选择
-	  table.on('checkbox(demo)', function(obj){
-	    console.log(obj)
-	  });
-	  //监听工具条
-	  table.on('tool(demo)', function(obj){
-	    var data = obj.data;
-	    if(obj.event === 'detail'){
-	      layer.msg('ID：'+ data.id + ' 的查看操作');
-	    } else if(obj.event === 'del'){
-	      layer.confirm('真的删除行么', function(index){
-	        obj.del();
-	        layer.close(index);
-	      });
-	    } else if(obj.event === 'edit'){
-	      layer.alert('编辑行：<br>'+ JSON.stringify(data))
-	    }
-	  });
-	  
-	  var $ = layui.$, active = {
-	    getCheckData: function(){ //获取选中数据
-	      var checkStatus = table.checkStatus('idTest')
-	      ,data = checkStatus.data;
-	      layer.alert(JSON.stringify(data));
-	    }
-	    ,getCheckLength: function(){ //获取选中数目
-	      var checkStatus = table.checkStatus('idTest')
-	      ,data = checkStatus.data;
-	      layer.msg('选中了：'+ data.length + ' 个');
-	    }
-	    ,isAll: function(){ //验证是否全选
-	      var checkStatus = table.checkStatus('idTest');
-	      layer.msg(checkStatus.isAll ? '全选': '未全选')
-	    }
-	  };
-	  
-	  $('.demoTable .layui-btn').on('click', function(){
-	    var type = $(this).data('type');
-	    active[type] ? active[type].call(this) : '';
-	  });
-	});
-</script>
+
+    <div class="layui-footer">
+        © yangjiawenhua.com - 底部固定区域
+    </div>
 </div>
+<%-- start 工具栏 --%>
+<script type="text/html" id="bookName">
+    <a href="" class="layui-table-link" target="_blank" onclick="info({{d.id}});return false">{{ d.bookName }}</a>
+</script>
+<script type="text/html" id="barDemo">
+    {{#  if(d.status != '订单结束' && d.status != '订单取消'){ }}
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">状态修改</a>
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">编辑订单</a>
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="del">取消订单</a>
+    {{#  } }}
+</script>
+<%-- end 工具栏 --%>
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function (obj) {
+            console.log(obj)
+        });
+        //监听工具条
+        table.on('tool(demo)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                layer.open({
+                    type: 2,
+                    title: '展示详情',
+                    shadeClose: true,
+                    shade: 0.8,
+                    offset: '50px',
+                    area: ['50%', '90%'],
+                    moveOut: true,
+                    content: '${hostIp}/4/orderDataJsp?orderId=' + data.id,
+                    end: flushall
+                });
+            } else if (obj.event === 'del') {
+                layer.confirm('真的取消订单么？', function (index) {
+                    $.ajax({
+                        type: 'POST',
+                        contentType: "application/json",
+                        url: "/4/cancelOrder?id=" + data.id,
+                        success: flushall,
+                        error: callbackError
+                    });
+                });
+            } else if (obj.event === 'edit') {
+                layer.open({
+                    type: 2,
+                    title: '展示详情',
+                    shadeClose: true,
+                    shade: 0.8,
+                    offset: '50px',
+                    area: ['50%', '90%'],
+                    moveOut: true,
+                    content: '${hostIp}/'
+                });
+            }
+        });
+
+        var $ = layui.$, active = {
+            select: function () {
+                flushall()
+            },
+            add: function () { //获取选中数据
+//                var checkStatus = table.checkStatus('idTest')
+//                    , data = checkStatus.data;
+//                layer.alert(JSON.stringify(data));
+                layer.open({
+                    type: 2,
+                    title: '添加自费图书',
+                    shadeClose: true,
+                    shade: 0.8,
+                    offset: '50px',
+                    area: ['50%', '90%'],
+                    moveOut: true,
+                    content: '${hostIp}/3/32/selfBookAddJsp',
+                    end: function () {
+                        location.reload();
+                    }
+                });
+            }
+            , update: function () { //获取选中数目
+                var checkStatus = table.checkStatus('idTest')
+                    , data = checkStatus.data;
+                if (data.length != 1)
+                    layer.msg('请选中一条数据');
+                else {
+                    layer.open({
+                        type: 2,
+                        title: '编辑自费图书',
+                        shadeClose: true,
+                        shade: 0.8,
+                        offset: '50px',
+                        area: ['50%', '90%'],
+                        moveOut: true,
+                        content: '${hostIp}/3/32/userUpdateJsp?id=' + data[0].id,
+                        end: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            }
+            , delete: function () {
+                var checkStatus = table.checkStatus('idTest')
+                    , data = checkStatus.data;
+                if (data.length == 0)
+                    layer.msg('请选中至少一条数据');
+                else {
+                    layer.confirm('真的删除这些用户么么', function (index) {
+                        var url = '/1/11/deleteUser'
+                        var ids = '';
+                        for (i = 0; i < data.length; i++) {
+                            ids += data[i].id + ","
+                        }
+                        ids = ids.substr(0, ids.length - 1)
+                        window.location.href = url + '?ids=' + ids
+                    });
+                }
+
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+
+    function flushall(data) {
+        var table = layui.table;
+        //执行重载
+        table.reload('idTest1', {
+            where: { //设定异步数据接口的额外参数，任意设
+                aaaaaa: 'xxx'
+                , bbb: 'yyy'
+                //…
+            }
+            , page: {
+                curr: 1 //重新从第 1 页开始
+            }
+        });
+        //执行重载
+        table.reload('idTest2', {
+            where: { //设定异步数据接口的额外参数，任意设
+                aaaaaa: 'xxx'
+                , bbb: 'yyy'
+                //…
+            }
+            , page: {
+                curr: 1 //重新从第 1 页开始
+            }
+        });
+        //执行重载
+        table.reload('idTest3', {
+            where: { //设定异步数据接口的额外参数，任意设
+                aaaaaa: 'xxx'
+                , bbb: 'yyy'
+                //…
+            }
+            , page: {
+                curr: 1 //重新从第 1 页开始
+            }
+        });
+    }
+</script>
 </body>
 </html>

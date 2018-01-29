@@ -1,10 +1,16 @@
 package com.yjwh.crm.enums;
 
 public enum BookStatusEnum {
-    NO_ORDER(0,"red","未订单"),
-    IS_ORDER(1,"pink","已预订"),
-    NO_MONEY(2,"blue","已订未回款"),
-    FINISH(3,"green","订单完成");
+
+    NO_ORDER(0,"<font color='red'><b>×</b><font>","未订单"),
+    IS_ORDER(1,"<font color='pink'><b>■</b><font>","已预订"),
+    NO_MONEY(2,"<font color='blue'><b>●</b><font>","已订未回款"),
+    FINISH(3,"<font color='green'><b>√</b><font>","订单完成"),
+
+    // 自费图书状态
+    FIRST_RETURN(4,"","已确认第一次回款"),
+    SECOND_RETURN(5,"","已确认第二次回款")
+    ;
     private int status;
     private String color;
     private String statusName;

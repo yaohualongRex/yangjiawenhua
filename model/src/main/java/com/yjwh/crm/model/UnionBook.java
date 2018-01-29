@@ -16,13 +16,11 @@ public class UnionBook {
     private Long id;
 	@Column(name = "book_name")
     private String bookName;
-	@Column(name = "create_time")
+    @Column(name = "publicer")
+    private String publicer;
+	@Column(name = "public_time")
     @JSONField(format="yyyy-MM-dd")
-    private Date createTime;
-    @Column(name = "status")
-    private String status;
-    @Column(name = "type")
-    private Integer type;//图书类型：1合作图书，2自费图书
+    private Date publicTime;
 	@Column(name = "a_1")
     private Long a1;
 	@Column(name = "a_2")
@@ -230,6 +228,14 @@ public class UnionBook {
         this.b5s = b5s;
     }
 
+    public String getPublicer() {
+        return publicer;
+    }
+
+    public void setPublicer(String publicer) {
+        this.publicer = publicer;
+    }
+
     public String getB6s() {
         return b6s;
     }
@@ -374,21 +380,6 @@ public class UnionBook {
         this.c15s = c15s;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
 
     public Long getId() {
         return id;
@@ -406,12 +397,12 @@ public class UnionBook {
         this.bookName = bookName == null ? null : bookName.trim();
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getPublicTime() {
+        return publicTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setPublicTime(Date publicTime) {
+        this.publicTime = publicTime;
     }
 
     public Long getA1() {

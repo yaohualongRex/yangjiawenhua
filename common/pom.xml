@@ -6,4 +6,13 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>common</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.yjwh.crm.manage</groupId>
+      <artifactId>model</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+
 </project>

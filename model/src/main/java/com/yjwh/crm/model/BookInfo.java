@@ -14,12 +14,12 @@ public class BookInfo {
     private String bookName;
 	@Column(name = "publicer")
     private String publicer;
-	@Column(name = "create_time")
-    private Date createTime;
-	@Column(name = "eb")
-    private String eb;
-	@Column(name = "type")
-    private String type;
+	@Column(name = "public_time")
+    private Date publicTime;
+	@Column(name = "bwh")
+    private String bwh;
+	@Column(name = "fix_type")
+    private String fixType;
 	@Column(name = "words")
     private String words;
 	@Column(name = "size")
@@ -53,28 +53,28 @@ public class BookInfo {
         this.publicer = publicer == null ? null : publicer.trim();
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getPublicTime() {
+        return publicTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setPublicTime(Date publicTime) {
+        this.publicTime = publicTime;
     }
 
-    public String getEb() {
-        return eb;
+    public String getBwh() {
+        return bwh;
     }
 
-    public void setEb(String eb) {
-        this.eb = eb == null ? null : eb.trim();
+    public void setBwh(String bwh) {
+        this.bwh = bwh;
     }
 
-    public String getType() {
-        return type;
+    public String getFixType() {
+        return fixType;
     }
 
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
+    public void setFixType(String fixType) {
+        this.fixType = fixType;
     }
 
     public String getWords() {

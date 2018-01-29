@@ -123,7 +123,7 @@
                     offset: '50px',
                     area: ['50%', '90%'],
                     moveOut: true,
-                    content: '${hostIp}/3/32/selfBookAddJsp',
+                    content: '${hostIp}/3/bookAddJsp?bookType=2',
                     end: function () {
                         location.reload();
                     }

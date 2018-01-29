@@ -26,7 +26,7 @@
     <!-- start 内容主体区域 -->
     <div class="layui-body">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>自费图书管理</legend>
+            <legend>合作图书管理</legend>
         </fieldset>
         <div style="margin-bottom: 5px;">
             <!-- 示例-970 -->
@@ -39,17 +39,17 @@
         </div>
 
         <table class="layui-table"
-               lay-data="{ url:'/3/31/selectUnionBook', page:true, id:'idTest'}"
+               lay-data="{ url:'/3/31/selectUnionBook',cellMinWidth: 20, page:true, id:'idTest'}"
                lay-filter="demo">
             <thead>
             <tr>
                 <th lay-data="{type:'checkbox', fixed: 'left'}" rowspan="2"></th>
-                <th lay-data="{field:'bookName', width: 200, sort: true, fixed: true, templet: '#bookName'}" rowspan="2" >书名</th>
-                <th lay-data="{field:'createTime',width: 150, sort: true}" rowspan="2">出版日期</th>
+                <th lay-data="{field:'bookName',width: 107,  sort: true, fixed: true, templet: '#bookName'}" rowspan="2" >书名</th>
+                <th lay-data="{field:'publicTime',width: 107, sort: true}" rowspan="2">出版日期</th>
                 <th lay-data="{align:'center'}" colspan="6">主编</th>
                 <th lay-data="{align:'center'}" colspan="8">副主编</th>
                 <th lay-data="{align:'center'}" colspan="15">参编</th>
-                <th lay-data="{fixed: 'right', align:'center', toolbar: '#barDemo'}" rowspan="2">操作</th>
+                <th lay-data="{fixed: 'right',width: 167, align:'center', toolbar: '#barDemo'}" rowspan="2">操作</th>
             </tr>
             <tr>
                 <th lay-data="{field:'a1s', sort: false}">1</th>
@@ -99,6 +99,8 @@
 </script>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
 </script>
 <%-- end 工具栏 --%>
 <script>
@@ -109,9 +111,9 @@
             shadeClose: true,
             shade: 0.8,
             offset: '50px',
-            area: ['50%', '90%'],
+            area: ['80%', '95%'],
             moveOut: true,
-            content: '${hostIp}/3/31/selectUnionBookInfo?bookId='+obj,
+            content: '${hostIp}/3/31/selectUnionBookInfo?bookId='+obj
         });
     }
     layui.use('table', function () {
@@ -146,18 +148,15 @@
 
         var $ = layui.$, active = {
             add: function () { //获取选中数据
-//                var checkStatus = table.checkStatus('idTest')
-//                    , data = checkStatus.data;
-//                layer.alert(JSON.stringify(data));
                 layer.open({
                     type: 2,
-                    title: '添加自费图书',
+                    title: '添加合作图书',
                     shadeClose: true,
                     shade: 0.8,
                     offset: '50px',
                     area: ['50%', '90%'],
                     moveOut: true,
-                    content: '${hostIp}/3/32/selfBookAddJsp',
+                    content: '${hostIp}/3/bookAddJsp?bookType=1',
                     end: function () {
                         location.reload();
                     }

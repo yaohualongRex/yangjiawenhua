@@ -3,6 +3,7 @@ package com.yjwh.crm.model;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Table(name = "recommend")
 public class Recommend {
@@ -30,13 +31,13 @@ public class Recommend {
 	@Column(name = "bcustom_place")
     private String bcustomPlace;
 	@Column(name = "bcustom_amount")
-    private Long bcustomAmount;
+    private BigDecimal bcustomAmount;
 	@Column(name = "bank_name")
     private String bankName;
 	@Column(name = "bank_no")
     private String bankNo;
 	@Column(name = "recommend_amount")
-    private Long recommendAmount;
+    private BigDecimal recommendAmount;
 	@Column(name = "recommend_remark")
     private String recommendRemark;
 	@Column(name = "user_id")
@@ -132,11 +133,11 @@ public class Recommend {
         this.bcustomPlace = bcustomPlace == null ? null : bcustomPlace.trim();
     }
 
-    public Long getBcustomAmount() {
+    public BigDecimal getBcustomAmount() {
         return bcustomAmount;
     }
 
-    public void setBcustomAmount(Long bcustomAmount) {
+    public void setBcustomAmount(BigDecimal bcustomAmount) {
         this.bcustomAmount = bcustomAmount;
     }
 
@@ -156,11 +157,11 @@ public class Recommend {
         this.bankNo = bankNo == null ? null : bankNo.trim();
     }
 
-    public Long getRecommendAmount() {
+    public BigDecimal getRecommendAmount() {
         return recommendAmount;
     }
 
-    public void setRecommendAmount(Long recommendAmount) {
+    public void setRecommendAmount(BigDecimal recommendAmount) {
         this.recommendAmount = recommendAmount;
     }
 

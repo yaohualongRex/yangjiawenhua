@@ -5,6 +5,9 @@
     <div class="layui-btn-group">
         <c:forEach items="${buttons}" var="button">
             <c:choose>
+                <c:when test="${button.id%10 eq 0}">
+                    <button class="layui-btn" data-type="select">${button.privilegeName}</button>
+                </c:when>
                 <c:when test="${button.id%10 eq 1}">
                     <button class="layui-btn" data-type="add">${button.privilegeName}</button>
                 </c:when>
