@@ -1,11 +1,14 @@
 package com.yjwh.crm.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
-@Table(name = "order")
+@Table(name = "order_x")
 public class Order {
 	@Id
 	@Column(name = "id")
@@ -19,7 +22,7 @@ public class Order {
 	@Column(name = "book_id")
     private Long bookId;
 	@Column(name = "amount")
-    private Long amount;
+    private BigDecimal amount;
 	@Column(name = "words")
     private String words;
 	@Column(name = "remark")
@@ -27,22 +30,103 @@ public class Order {
 	@Column(name = "contract_send_date")
     private Date contractSendDate;
 	@Column(name = "return_amount")
-    private Long returnAmount;
+    private BigDecimal returnAmount;
 	@Column(name = "return_date")
     private Date returnDate;
 	@Column(name = "status")
     private String status;
 	@Column(name = "create_time")
+    @JSONField(format="yyyy-MM-dd")
     private Date createTime;
 	@Column(name = "second_return_amount")
-    private Long secondReturnAmount;
+    private BigDecimal secondReturnAmount;
 	@Column(name = "second_return_time")
     private Date secondReturnTime;
 	@Column(name = "third_return_amount")
-    private Long thirdReturnAmount;
+    private BigDecimal thirdReturnAmount;
 	@Column(name = "third_return_time")
     private Date thirdReturnTime;
-	
+    @Column(name = "type")
+    private Integer type;//1合作图书，2自费图书
+    @Column(name = "book_name")
+    private String bookName;
+    @Column(name = "order_no")
+    private String orderNo;
+    @Column(name="user_name")
+    private String userName;
+    @Column(name="user_id")
+    private Long userId;
+    @Column(name="book_info_id")
+    private Long bookInfoId;
+    @Column(name="customer_id")
+    private Long customerId;
+    @Column(name="cancel_date")
+    private Date cancelDate;
+
+    public Date getCancelDate() {
+        return cancelDate;
+    }
+
+    public void setCancelDate(Date cancelDate) {
+        this.cancelDate = cancelDate;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public Long getBookInfoId() {
+        return bookInfoId;
+    }
+
+    public void setBookInfoId(Long bookInfoId) {
+        this.bookInfoId = bookInfoId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public Long getId() {
         return id;
     }
@@ -83,11 +167,11 @@ public class Order {
         this.bookId = bookId;
     }
 
-    public Long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -115,11 +199,11 @@ public class Order {
         this.contractSendDate = contractSendDate;
     }
 
-    public Long getReturnAmount() {
+    public BigDecimal getReturnAmount() {
         return returnAmount;
     }
 
-    public void setReturnAmount(Long returnAmount) {
+    public void setReturnAmount(BigDecimal returnAmount) {
         this.returnAmount = returnAmount;
     }
 
@@ -147,11 +231,11 @@ public class Order {
         this.createTime = createTime;
     }
 
-    public Long getSecondReturnAmount() {
+    public BigDecimal getSecondReturnAmount() {
         return secondReturnAmount;
     }
 
-    public void setSecondReturnAmount(Long secondReturnAmount) {
+    public void setSecondReturnAmount(BigDecimal secondReturnAmount) {
         this.secondReturnAmount = secondReturnAmount;
     }
 
@@ -163,11 +247,11 @@ public class Order {
         this.secondReturnTime = secondReturnTime;
     }
 
-    public Long getThirdReturnAmount() {
+    public BigDecimal getThirdReturnAmount() {
         return thirdReturnAmount;
     }
 
-    public void setThirdReturnAmount(Long thirdReturnAmount) {
+    public void setThirdReturnAmount(BigDecimal thirdReturnAmount) {
         this.thirdReturnAmount = thirdReturnAmount;
     }
 

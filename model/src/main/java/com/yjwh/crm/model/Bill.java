@@ -3,6 +3,7 @@ package com.yjwh.crm.model;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Table(name = "bill")
 public class Bill {
@@ -30,7 +31,7 @@ public class Bill {
 	@Column(name = "publishing_house")
     private String publishingHouse;
 	@Column(name = "bill_amount")
-    private Long billAmount;
+    private BigDecimal billAmount;
 	@Column(name = "remark")
     private String remark;
 
@@ -122,11 +123,11 @@ public class Bill {
         this.publishingHouse = publishingHouse == null ? null : publishingHouse.trim();
     }
 
-    public Long getBillAmount() {
+    public BigDecimal getBillAmount() {
         return billAmount;
     }
 
-    public void setBillAmount(Long billAmount) {
+    public void setBillAmount(BigDecimal billAmount) {
         this.billAmount = billAmount;
     }
 

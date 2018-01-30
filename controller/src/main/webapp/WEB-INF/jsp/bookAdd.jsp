@@ -9,62 +9,79 @@
           content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>阳夏文化图书管理系统</title>
 </head>
-<body>
+<body >
 
 <!-- start 内容主体区域 -->
 <div class="center">
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-        <legend>订单信息录入</legend>
+        <legend>新增图书</legend>
     </fieldset>
     <form class="layui-form layui-form-pane" action="">
-        <%-- 隐藏内容 --%>
-        <input name="type" type="hidden" value="${model.type}">
-        <input name="bookId" type="hidden" value="${model.bookId}">
-        <input name="placeField" type="hidden" value="${model.placeField}">
+        <input name="bookType" type="text" value="${bookType}" disabled="disabled">
 
         <div class="layui-form-item">
-            <label class="layui-form-label">客户电话</label>
+            <label class="layui-form-label">书名</label>
             <div class="layui-input-inline">
-                <input name="phoneNo" lay-verify="required" placeholder="请输入客户联系电话" autocomplete="off" class="layui-input" type="text">
+                <input name="bookName" lay-verify="required" placeholder="请输入书名" autocomplete="off"
+                       class="layui-input" type="text">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">客户姓名</label>
+            <label class="layui-form-label">出版社</label>
             <div class="layui-input-inline">
-                <input name="customName" lay-verify="required" placeholder="请输入客户姓名" autocomplete="off" class="layui-input" type="text">
+                <input name="publicer" lay-verify="required" placeholder="请输入出版社" autocomplete="off"
+                       class="layui-input" type="text">
             </div>
-            <div class="layui-form-mid layui-word-aux"></div>
         </div>
+
         <div class="layui-form-item">
-            <label class="layui-form-label">订单书籍</label>
-            <div class="layui-input-inline">
-                <input name="bookName" lay-verify="required" autocomplete="off" class="layui-input" type="text" disabled="disabled" value="${model.bookName}">
-            </div>
-        </div>
-        <c:if test="${model.type eq 1}">
-            <div class="layui-form-item">
-                <label class="layui-form-label">参编位置</label>
-                <div class="layui-input-inline">
-                    <input name="customPlace" lay-verify="required"  autocomplete="off" class="layui-input" type="text" disabled="disabled" value="${model.customPlace}">
-                </div>
-            </div>
-        </c:if>
-        <div class="layui-form-item">
-            <label class="layui-form-label">订单金额</label>
-            <div class="layui-input-inline">
-                <input name="amount" lay-verify="required" placeholder="请输入订单金额" autocomplete="off" class="layui-input" type="text">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">字数要求</label>
-            <div class="layui-input-inline">
-                <input name="words" lay-verify="required" placeholder="请输入字数要求" autocomplete="off" class="layui-input" type="text">
-            </div>
-        </div>
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">订单备注</label>
+            <label class="layui-form-label">出版日期</label>
             <div class="layui-input-block">
-                <textarea name="remark" placeholder="请输入备注内容" class="layui-textarea"></textarea>
+                <input name="public_time" lay-verify="required" placeholder="请选择出版日期" id="date1" autocomplete="off"
+                       class="layui-input" type="text">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">编委会</label>
+            <div class="layui-input-inline">
+                <input name="bwh" lay-verify="required" placeholder="请输入编委会" autocomplete="off"
+                       class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">装帧方式</label>
+            <div class="layui-input-inline">
+                <input name="fixType" lay-verify="required" placeholder="请输入装帧方式" autocomplete="off"
+                       class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">字数</label>
+            <div class="layui-input-inline">
+                <input name="words" lay-verify="required" placeholder="请输入字数" autocomplete="off"
+                       class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">开本</label>
+            <div class="layui-input-inline">
+                <input name="size" lay-verify="required" placeholder="请输入开本" autocomplete="off"
+                       class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">成品尺寸</label>
+            <div class="layui-input-inline">
+                <input name="productSize" lay-verify="required" placeholder="请输入成品尺寸" autocomplete="off"
+                       class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">印刷册数</label>
+            <div class="layui-input-inline">
+                <input name="volumes" lay-verify="required" placeholder="请输入印刷册数" autocomplete="off"
+                       class="layui-input" type="text">
             </div>
         </div>
         <div class="layui-form-item">
@@ -116,7 +133,7 @@
 
         //监听提交
         form.on('submit(demo1)', function (data) {
-            var url = '/4/addOrder'
+            var url = '/3/addBook'
             var json = JSON.stringify(data.field);
             $.ajax({
                 type: 'POST',
