@@ -60,9 +60,9 @@
         </table>
     </div>
 
-    <div class="layui-footer">
+    <!-- <div class="layui-footer">
         © yangjiawenhua.com - 底部固定区域
-    </div>
+    </div> -->
 </div>
 
 <%-- start 工具栏 --%>

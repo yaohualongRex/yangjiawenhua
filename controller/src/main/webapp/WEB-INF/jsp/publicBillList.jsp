@@ -29,11 +29,6 @@
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
             <legend>客户信息查询</legend>
         </fieldset>
-        <div style="margin-bottom: 5px;">
-            <!-- 示例-970 -->
-            <ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px"
-                 data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
-        </div>
 
         <div class="layui-btn-group demoTable">
             <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
@@ -59,9 +54,9 @@
         <%--</table>--%>
     </div>
 
-    <div class="layui-footer">
+    <!-- <div class="layui-footer">
         © yangjiawenhua.com - 底部固定区域
-    </div>
+    </div> -->
 </div>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="detail">详情</a>

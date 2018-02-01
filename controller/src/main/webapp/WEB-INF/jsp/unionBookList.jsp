@@ -28,18 +28,13 @@
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
             <legend>合作图书管理</legend>
         </fieldset>
-        <div style="margin-bottom: 5px;">
-            <!-- 示例-970 -->
-            <ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px"
-                 data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
-        </div>
 
         <div class="layui-btn-group demoTable">
             <%@include file="0buttons.jsp" %>
         </div>
 
         <table class="layui-table"
-               lay-data="{ url:'/3/31/selectUnionBook',cellMinWidth: 20, page:true, id:'idTest'}"
+               lay-data="{height: 'full-200', url:'/3/31/selectUnionBook',cellMinWidth: 20, page:true, id:'idTest'}"
                lay-filter="demo">
             <thead>
             <tr>
@@ -89,9 +84,9 @@
 
     </div>
 
-    <div class="layui-footer">
+    <!-- <div class="layui-footer">
         © yangjiawenhua.com - 底部固定区域
-    </div>
+    </div> -->
 </div>
 <%-- start 工具栏 --%>
 <script type="text/html" id="bookName">

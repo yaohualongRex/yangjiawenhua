@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>阳夏文化图书管理系统</title>
+    <title>阳夏图书管理系统</title>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -26,7 +26,7 @@
     <!-- start 内容主体区域 -->
     <div class="layui-body">
         <div style="padding: 15px;">
-            <font size="4"><B> 雅卓图书系统管理规章制度</B></font> <br> <br> <br>
+            <font size="4"><B> 阳夏图书系统管理规章制度</B></font> <br> <br> <br>
             <%@include file="0buttons.jsp" %>
             <br> （1）本人账号严禁转借（转让）其他人使用。<br> （2）本人密码不得随意告知其他人。<br>
             （3）本系统的网址不得随意告知公司以外的其他人。<br> （4）本管理系统严禁在非公司电脑上登陆。<br>
@@ -38,9 +38,9 @@
     <!-- end 内容主体区域 -->
 
     <!-- start 底部固定区域 -->
-    <div class="layui-footer">
+    <!-- <div class="layui-footer">
         © yangjiawenhua.com - 底部固定区域
-    </div>
+    </div> -->
     <!-- end 底部固定区域 -->
 </div>
 </body>

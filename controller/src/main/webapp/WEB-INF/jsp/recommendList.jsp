@@ -32,10 +32,6 @@
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>客户信息查询</legend>
             </fieldset>
-			<div style="margin-bottom: 5px;">          
-				<!-- 示例-970 -->
-				<ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
-			</div>
 			 
 			<div class="layui-btn-group demoTable">
 			  <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
@@ -43,7 +39,7 @@
 			  <button class="layui-btn" data-type="isAll">验证是否全选</button>
 			</div>
 			
-			<table class="layui-table" lay-data="{width: 892, height:332, url:'/2/22/selectCustom', page:true, id:'idTest'}" lay-filter="demo">
+			<table class="layui-table" lay-data="{width: 892, height: 'full-200', url:'/2/22/selectCustom', page:true, id:'idTest'}" lay-filter="demo">
 			  <thead>
 			    <tr>
 			      <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
@@ -58,10 +54,10 @@
 			</table>
         </div>
 
-        <div class="layui-footer">
-            <!-- 底部固定区域 -->
+        <!-- <div class="layui-footer">
+            底部固定区域
             © yangjiawenhua.com - 底部固定区域
-        </div>
+        </div> -->
     </div>
     <script src="../../layui.js"></script>
     <script type="text/html" id="barDemo">
