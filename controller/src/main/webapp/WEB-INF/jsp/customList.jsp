@@ -125,7 +125,7 @@
                         offset: '50px',
                         area: ['50%', '90%'],
                         moveOut: true,
-                        content: '${hostIp}/1/11/userUpdateJsp?id='+data[0].id,
+                        content: '${hostIp}/2/22/updateCustomJsp?id='+data[0].id,
                         end: function () {
                             location.reload();
                         }

@@ -2,7 +2,7 @@
          pageEncoding="UTF-8" %>
 
 <div class="layui-logo">
-    <font size="4"><B>阳夏文化图书管理系统</B></font>
+    <font size="4"><B>阳夏图书管理系统</B></font>
 </div>
 <ul class="layui-nav layui-layout-left">
     <li class="layui-nav-item">欢迎您, <B>${currentUser.chinaName}</B> 进入阳夏图书管理系统!您当前所在用户组: <B>${currentUser.roleName}</B>

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.yjwh.crm.po.Response;
+import com.yjwh.crm.po.UserPo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -106,4 +108,14 @@ public class CustomerController {
 		int insert = customerMapper.insert(custom);
 		return "customList";
 	}
+	@RequestMapping("/22/updateCustomJsp")
+	public String updateCustomerJsp(Long id,Model model) {
+		Custom selectByPrimaryKey = customerMapper.selectByPrimaryKey(id);
+		CustomModle cm = JSON.parseObject(JSON.toJSONString(selectByPrimaryKey), CustomModle.class);
+		User selectByPrimaryKey2 = userMapper.selectByPrimaryKey(selectByPrimaryKey.getUserId());
+		cm.setUserChinaName(selectByPrimaryKey2.getChinaName());
+		model.addAttribute("custom",cm);
+		return "customUpdate";
+	}
+	
 }

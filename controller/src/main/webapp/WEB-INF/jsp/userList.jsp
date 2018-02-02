@@ -43,8 +43,8 @@
                 <th lay-data="{field:'username', width:200, sort: true}">用户名</th>
                 <th lay-data="{field:'chinaName', width:200, sort: true}">姓名</th>
                 <th lay-data="{field:'position', width:200}">职位</th>
+                <th lay-data="{field:'dtoId', width:200}">所属部门</th>
                 <th lay-data="{field:'sex'}">性别</th>
-                <th lay-data="{fixed: 'right',width:120, align:'center', toolbar: '#barDemo'}">操作</th>
             </tr>
             </thead>
         </table>
@@ -55,13 +55,6 @@
         © yangjiawenhua.com - 底部固定区域
     </div> -->
 </div>
-<%-- start 工具栏 --%>
-<script type="text/html" id="barDemo">
-    {{#  if(d.auth > 2){ }}
-    <a class="layui-btn layui-btn-xs" lay-event="check">录入新订单</a>
-    {{#  } }}
-</script>
-<%-- end 工具栏 --%>
 <script>
     layui.use('table', function () {
         var table = layui.table;

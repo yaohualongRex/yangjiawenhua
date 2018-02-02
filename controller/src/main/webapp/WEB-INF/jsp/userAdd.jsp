@@ -40,6 +40,13 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input name="sex" value="男" title="男" type="radio" checked>
+                <input name="sex" value="女" title="女" type="radio">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">用户角色</label>
             <div class="layui-input-inline">
                 <select name="roleId" lay-verify="required">
@@ -48,10 +55,12 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">性别</label>
-            <div class="layui-input-block">
-                <input name="sex" value="男" title="男" type="radio" checked>
-                <input name="sex" value="女" title="女" type="radio">
+            <label class="layui-form-label">所属部门</label>
+            <div class="layui-input-inline">
+                <div class="layui-input-inline">
+                <input name="dtoId" lay-verify="required" placeholder="请输入员工部门" autocomplete="off"
+                       class="layui-input" type="text">
+            </div>
             </div>
         </div>
         <div class="layui-form-item">
