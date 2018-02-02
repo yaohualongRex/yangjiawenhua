@@ -64,7 +64,12 @@
     <a href="" class="layui-table-link" target="_blank" onclick="info({{d.id}});return false">{{ d.bookName }}</a>
 </script>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    {{#  if(d.orderId == "" || d.orderId == null){ }}
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="add">添加订单</a>
+    {{#  } else { }}
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看订单</a>
+    {{#  } }}
+
 </script>
 <%-- end 工具栏 --%>
 <script>
@@ -77,7 +82,7 @@
             offset: '50px',
             area: ['50%', '90%'],
             moveOut: true,
-            content: '${hostIp}/3/31/selectUnionBookInfo?bookId='+obj,
+            content: '${hostIp}/3/32/selfBookInfo?id='+obj,
         });
     }
     layui.use('table', function () {
@@ -90,11 +95,37 @@
         table.on('tool(demo)', function (obj) {
             var data = obj.data;
             if (obj.event === 'detail') {
-                layer.msg('ID：' + data.id + ' 的查看操作');
-            } else if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
+                layer.open({
+                    type: 2,
+                    title: '展示详情',
+                    shadeClose: true,
+                    shade: 0.8,
+                    offset: '50px',
+                    area: ['50%', '90%'],
+                    moveOut: true,
+
+                    content: '${hostIp}/4/orderDataJsp?bookId='+data.id+'&flag=true'
+                });
+            } else if (obj.event === 'add') {
+                layer.open({
+                    type: 2,
+                    title: '展示详情',
+                    shadeClose: true,
+                    shade: 0.8,
+                    offset: '50px',
+                    area: ['50%', '90%'],
+                    moveOut: true,
+                    content: '${hostIp}/4/orderAddJsp?orderInfo=2,'+data.id,
+                    end: function () {
+                        table.reload('idTest', {
+                            where: { //设定异步数据接口的额外参数，任意设
+                                aaaaaa: 'xxx'
+                            }
+                            , page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                    }
                 });
             } else if (obj.event === 'edit') {
                 layer.open({

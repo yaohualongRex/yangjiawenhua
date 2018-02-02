@@ -73,12 +73,6 @@
 
     function callback(data) {
         window.location.href = '/index';
-//            if (data != ""){
-//                layui.use('layer', function(){
-//                    var layer = layui.layer;
-//                    layer.msg(data);
-//                });
-//            }
     }
 
 </script>

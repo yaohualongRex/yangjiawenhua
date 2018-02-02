@@ -1,14 +1,12 @@
 package com.yjwh.crm.manage.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.yangjiawenhua.utils.CommonUtils;
 import com.yjwh.crm.po.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +27,7 @@ import com.yjwh.crm.model.User;
 import com.yjwh.crm.model.UserRole;
 import com.yjwh.crm.po.CustomModle;
 import org.springframework.web.bind.annotation.ResponseBody;
+import tk.mybatis.mapper.entity.Example;
 
 
 /**
@@ -59,8 +58,32 @@ public class CustomerController {
 	@RequestMapping("/22/selectCustom")
 	@ResponseBody
 	public Object selectCustomer(HttpSession session, HttpServletRequest request , HttpServletResponse response,Model model) {
-		Map<Object,Object> map  = new HashMap<Object,Object>();
-		List<Custom> customList = customerMapper.selectAll();
+		User user = CommonUtils.getUser(session);
+		UserRole userRole = new UserRole();
+		userRole.setUserId(user.getId());
+		userRole = userRoleMapper.selectOne(userRole);
+		List<Custom> customList;
+		Example example = new Example(Custom.class);
+		Example.Criteria criteria = example.createCriteria();
+		if (Arrays.asList(UserRoleMapper.SALE_MANAGERS).contains(userRole.getRoleId())){//销售经理
+			// 通过销售员角色找到销售员id
+			UserRole temp = new UserRole();
+			temp.setRoleId(userRole.getRoleId()+1);
+			List<UserRole> userRoles = userRoleMapper.select(temp);
+			ArrayList<Long> ids = new ArrayList<>();
+			userRoles.forEach( each -> ids.add(each.getUserId()));
+			ids.add(user.getId());
+			example = new Example(Custom.class);
+			example.createCriteria().andIn("userId",ids);
+			customList = customerMapper.selectByExample(example);
+		}else if(Arrays.asList(UserRoleMapper.SALERS).contains(userRole.getRoleId())){//销售员
+			example = new Example(Custom.class);
+			example.createCriteria().andEqualTo("userId",user.getId());
+			customList = customerMapper.selectByExample(example);
+		}else {
+			customList = customerMapper.selectAll();
+		}
+
 		List<CustomModle> customLists = new ArrayList<CustomModle>();
 		for (Custom custom : customList) {
 			CustomModle customM = new CustomModle();

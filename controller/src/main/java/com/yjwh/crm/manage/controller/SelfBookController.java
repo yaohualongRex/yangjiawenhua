@@ -2,6 +2,7 @@ package com.yjwh.crm.manage.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
+import com.yangjiawenhua.utils.CommonUtils;
 import com.yjwh.crm.enums.BookStatusEnum;
 import com.yjwh.crm.enums.OrderStatusEnum;
 import com.yjwh.crm.mapper.BookInfoMapper;
@@ -45,7 +46,6 @@ public class SelfBookController {
 
     @RequestMapping("/32/selfBookListJsp")
     public String selfBookListJsp(){
-
         return "selfBookList";
     }
 
@@ -53,6 +53,16 @@ public class SelfBookController {
     public String bookAddJsp(Integer bookType, Model model) {
         model.addAttribute("bookType",bookType);
         return "bookAdd";
+    }
+    @RequestMapping("/32/selfBookInfo")
+    public String selfBookInfo(Long id, Model model) {
+        SelfBook selfBook = selfBookMapper.selectByPrimaryKey(id);
+        Long bookInfoId = selfBook.getBookInfoId();
+        BookInfo bookInfo = bookInfoMapper.selectByPrimaryKey(bookInfoId);
+        model.addAttribute("book",selfBook);
+        model.addAttribute("bookInfo",bookInfo);
+        model.addAttribute("date", CommonUtils.getStringTime(bookInfo.getPublicTime()));
+        return "selfBookInfo";
     }
 
     @RequestMapping("/addBook")
@@ -76,7 +86,7 @@ public class SelfBookController {
             book.setBookName(bookInfo.getBookName());
             book.setPublicer(bookInfo.getPublicer());
             book.setPublicTime(bookInfo.getPublicTime());
-            book.setStatus(OrderStatusEnum.PRE_VERSION.getStatusName());
+            book.setStatus(OrderStatusEnum.PRE_VERSION.getStatus());
             selfBookMapper.insert(book);
         }
 
@@ -90,6 +100,11 @@ public class SelfBookController {
         Example example = new Example(SelfBook.class);
         example.createCriteria();
         List<SelfBook> books = selfBookMapper.selectByExample(example);
+
+        for (SelfBook book : books) {
+            book.setStatus(BookStatusEnum.getNameOfStatus(book.getStatus()));
+        }
+        
         Response<SelfBook> response = new Response<>(books);
         response.setCount(selfBookMapper.selectCountByExample(example));
 

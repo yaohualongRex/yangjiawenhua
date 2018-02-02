@@ -62,6 +62,16 @@ public class Order {
     private Long customerId;
     @Column(name="cancel_date")
     private Date cancelDate;
+    @Column(name="union_book_position")
+    private String unionBookPosition;
+
+    public String getUnionBookPosition() {
+        return unionBookPosition;
+    }
+
+    public void setUnionBookPosition(String unionBookPosition) {
+        this.unionBookPosition = unionBookPosition;
+    }
 
     public Date getCancelDate() {
         return cancelDate;
