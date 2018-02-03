@@ -15,6 +15,7 @@ import com.yjwh.crm.po.OrderPo;
 import com.yjwh.crm.po.OrderVo;
 import com.yjwh.crm.po.PageInfo;
 import com.yjwh.crm.po.Response;
+import org.apache.jasper.tagplugins.jstl.core.If;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import tk.mybatis.mapper.entity.Example;
 
+import java.io.PipedReader;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -81,13 +84,21 @@ public class OrderController {
 		return "orderAdd";
 	}
 	@RequestMapping("/orderDataJsp")
-	public String orderDataJsp(Long orderId,HttpSession session,  Model model) {
+	public String orderDataJsp(Long orderId,HttpSession session, Model model, Long bookId, Boolean flag) {
+		if (bookId != null){
+			SelfBook selfBook = selfBookMapper.selectByPrimaryKey(bookId);
+			orderId = selfBook.getOrderId();
+		}
 		Order order = orderMapper.selectByPrimaryKey(orderId);
 		Custom custom = customMapper.selectByPrimaryKey(order.getCustomerId());
+		if (flag)
+			order.setStatus("1");
 
 		String createTime = CommonUtils.dateToStr(order.getCreateTime());
 		String sendDate = CommonUtils.dateToStr(order.getContractSendDate());
 		String returnDate = CommonUtils.dateToStr(order.getReturnDate());
+		String secondReturnDate = CommonUtils.dateToStr(order.getSecondReturnTime());
+		String thirdReturnDate = CommonUtils.dateToStr(order.getThirdReturnTime());
 		String cancelDate = CommonUtils.dateToStr(order.getCancelDate());
 		String status = OrderStatusEnum.getStatusNameByStatus(order.getStatus());
 		model.addAttribute("order",order);
@@ -97,6 +108,8 @@ public class OrderController {
 		model.addAttribute("status",status);
 		model.addAttribute("returnDate",returnDate);
 		model.addAttribute("cancelDate",cancelDate);
+		model.addAttribute("secondReturnDate",secondReturnDate);
+		model.addAttribute("thirdReturnDate",thirdReturnDate);
 		model.addAttribute("userName",CommonUtils.getUser(session).getChinaName());
 		return "orderData";
 	}
@@ -135,6 +148,7 @@ public class OrderController {
 			UnionBook unionBook = unionBookMapper.selectByPrimaryKey(orderVo.getBookId());
 
 			order.setBookInfoId(unionBook.getBookInfoId());
+			order.setUnionBookPosition(orderVo.getPlaceField());
 			orderMapper.insert(order);
 			Order temp = new Order();
 			temp.setOrderNo(order.getOrderNo());
@@ -151,6 +165,7 @@ public class OrderController {
 		}else {//自费图书
 			SelfBook selfBook = selfBookMapper.selectByPrimaryKey(orderVo.getBookId());
 			order.setBookInfoId(selfBook.getBookInfoId());
+			order.setStatus(OrderStatusEnum.PRE_VERSION.getStatus());
 			orderMapper.insert(order);
 			Order temp = new Order();
 			temp.setOrderNo(order.getOrderNo());
@@ -161,20 +176,33 @@ public class OrderController {
 		}
 		return "添加订单成功";
 	}
+
+	private void hiddenCustomerPhone(List<Order> orders, User user){
+		orders.forEach(
+				order -> {
+					if (!order.getUserId().equals(user.getId())){
+						order.setPhoneNo("***********");
+					}
+				}
+		);
+	}
+
 	@RequestMapping("/{type}/selectFinishOrder")//查询已完成订单
 	@ResponseBody
 	public String selectFinishOrder(HttpSession session,  Model model, PageInfo page, @PathVariable("type") Long type) {
 		PageHelper.startPage(page.getPage(),page.getLimit());
 		Example example = new Example(Order.class);
 		example.orderBy("id");
-		example.createCriteria()
-				.andEqualTo("type",type)
-				.andEqualTo("status",OrderStatusEnum.FINISH.getStatus());
+		Example.Criteria criteria = example.createCriteria()
+				.andEqualTo("type", type)
+				.andEqualTo("status", OrderStatusEnum.FINISH.getStatus());
 		List<Order> orders = orderMapper.selectByExample(example);
 		this.formatOrders(orders);
 
 		Response<Order> body = new Response<>(orders);
 		body.setCount(orderMapper.selectCountByExample(example));
+
+		this.hiddenCustomerPhone(orders,CommonUtils.getUser(session));
 		return JSON.toJSONString(body);
 	}
 
@@ -192,6 +220,8 @@ public class OrderController {
 		this.formatOrders(orders);
 		Response<Order> body = new Response<>(orders);
 		body.setCount(orderMapper.selectCountByExample(example));
+
+		this.hiddenCustomerPhone(orders,CommonUtils.getUser(session));
 		return JSON.toJSONString(body);
 	}
 
@@ -201,13 +231,15 @@ public class OrderController {
 		PageHelper.startPage(page.getPage(),page.getLimit());
 		Example example = new Example(Order.class);
 		example.orderBy("id");
-		example.createCriteria()
-				.andEqualTo("type",type)
-				.andEqualTo("status",OrderStatusEnum.CANCEL.getStatus());
+		Example.Criteria criteria = example.createCriteria()
+				.andEqualTo("type", type)
+				.andEqualTo("status", OrderStatusEnum.CANCEL.getStatus());
 		List<Order> orders = orderMapper.selectByExample(example);
 		this.formatOrders(orders);
 		Response<Order> body = new Response<>(orders);
 		body.setCount(orderMapper.selectCountByExample(example));
+
+		this.hiddenCustomerPhone(orders,CommonUtils.getUser(session));
 		return JSON.toJSONString(body);
 	}
 
@@ -220,39 +252,138 @@ public class OrderController {
 	}
 	@RequestMapping("/updateOrder")
 	@ResponseBody
-	public String updateOrder(HttpSession session, @RequestBody Order order) {
+	@Transactional
+	public String updateOrder(HttpSession session, @RequestBody Order order) throws NoSuchFieldException, IllegalAccessException {
 		Order temp = orderMapper.selectByPrimaryKey(order.getId());
+		String position = temp.getUnionBookPosition();
+		Long bookId = temp.getBookId();
 		User user = CommonUtils.getUser(session);
 		UserRole userRole = new UserRole();
 		userRole.setUserId(user.getId());
 		userRole = userRoleMapper.selectOne(userRole);
-		if (userRole.getRoleId()!=1l && userRole.getRoleId()!=2l)
-			throw new RuntimeException("您没有权限进行此操作");
 		if (temp.getStatus().equals(OrderStatusEnum.PRE_VERSION.getStatus())){//进行合同发送确认
-			temp = new Order();
-			temp.setId(order.getId());
-			temp.setContractSendDate(order.getContractSendDate());
-			order.setStatus(OrderStatusEnum.CONTRACT_SEND.getStatus());
-			orderMapper.updateByPrimaryKeySelective(order);
+			if (null == order.getContractSendDate()){
+				throw new RuntimeException("参数错误");
+			}
+			if (temp.getType().equals(1)){
+				temp = new Order();
+				temp.setId(order.getId());
+				temp.setContractSendDate(order.getContractSendDate());
+				order.setStatus(OrderStatusEnum.CONTRACT_SEND.getStatus());
+				orderMapper.updateByPrimaryKeySelective(order);
+
+
+				UnionBook unionBook = unionBookMapper.selectByPrimaryKey(bookId);
+				Field field = UnionBook.class.getDeclaredField(position + "s");
+				field.setAccessible(true);
+				field.set(unionBook,BookStatusEnum.NO_MONEY.getColor());
+				unionBookMapper.updateByPrimaryKeySelective(unionBook);
+			}else {
+				temp = new Order();
+				temp.setId(order.getId());
+				temp.setContractSendDate(order.getContractSendDate());
+				order.setStatus(OrderStatusEnum.CONTRACT_SEND.getStatus());
+				orderMapper.updateByPrimaryKeySelective(order);
+
+				SelfBook selfBook = selfBookMapper.selectByPrimaryKey(bookId);
+				selfBook.setStatus(BookStatusEnum.NO_MONEY.getStatus()+"");
+				selfBookMapper.updateByPrimaryKeySelective(selfBook);
+			}
 		}else if(temp.getStatus().equals(OrderStatusEnum.CONTRACT_SEND.getStatus())){//进行回款确认
-			temp = new Order();
-			temp.setId(order.getId());
-			temp.setContractSendDate(order.getContractSendDate());
-			order.setStatus(OrderStatusEnum.RETURN.getStatus());
-			orderMapper.updateByPrimaryKeySelective(order);
-		}else if (temp.getStatus().equals(OrderStatusEnum.RETURN.getStatus())){//订单结束
+			if (userRole.getRoleId()!=1l && userRole.getRoleId()!=2l)
+				throw new RuntimeException("您没有权限进行此操作");
+			if (null == order.getReturnAmount() || null==order.getReturnDate()){
+				throw new RuntimeException("参数错误");
+			}
+			if (temp.getType().equals(1)){
+				temp = new Order();
+				temp.setId(order.getId());
+				temp.setReturnAmount(order.getReturnAmount());
+				temp.setReturnDate(order.getReturnDate());
+				order.setStatus(OrderStatusEnum.RETURN.getStatus());
+				orderMapper.updateByPrimaryKeySelective(order);
+			}else {
+				temp = new Order();
+				temp.setId(order.getId());
+				temp.setReturnAmount(order.getReturnAmount());
+				temp.setReturnDate(order.getReturnDate());
+				order.setStatus(OrderStatusEnum.FIRST_RETURN.getStatus());
+				orderMapper.updateByPrimaryKeySelective(order);
+
+				SelfBook selfBook = selfBookMapper.selectByPrimaryKey(bookId);
+				selfBook.setStatus(BookStatusEnum.FIRST_RETURN.getStatus()+"");
+				selfBookMapper.updateByPrimaryKeySelective(selfBook);
+			}
+		}else if (temp.getStatus().equals(OrderStatusEnum.RETURN.getStatus())){//执行订单结束
+			if (userRole.getRoleId()!=1l && userRole.getRoleId()!=8l)
+				throw new RuntimeException("您没有权限进行此操作");
 			temp = new Order();
 			temp.setId(order.getId());
 			order.setStatus(OrderStatusEnum.FINISH.getStatus());
 			orderMapper.updateByPrimaryKeySelective(order);
-		}
 
+			UnionBook unionBook = unionBookMapper.selectByPrimaryKey(bookId);
+			Field field = UnionBook.class.getDeclaredField(position + "s");
+			field.setAccessible(true);
+			field.set(unionBook,BookStatusEnum.FINISH.getColor());
+			unionBookMapper.updateByPrimaryKeySelective(unionBook);
+		}else if (temp.getStatus().equals(OrderStatusEnum.FIRST_RETURN.getStatus())){
+			if (null == order.getSecondReturnAmount() || null==order.getSecondReturnTime()){
+				throw new RuntimeException("参数错误");
+			}
+			if (userRole.getRoleId()!=1l && userRole.getRoleId()!=2l)
+				throw new RuntimeException("您没有权限进行此操作");
+			temp = new Order();
+			temp.setId(order.getId());
+			temp.setSecondReturnAmount(order.getSecondReturnAmount());
+			temp.setSecondReturnTime(order.getSecondReturnTime());
+			order.setStatus(OrderStatusEnum.SECOND_RETURN.getStatus());
+			orderMapper.updateByPrimaryKeySelective(order);
+
+			SelfBook selfBook = selfBookMapper.selectByPrimaryKey(bookId);
+			selfBook.setStatus(BookStatusEnum.SECOND_RETURN.getStatus()+"");
+			selfBookMapper.updateByPrimaryKeySelective(selfBook);
+		}else if (temp.getStatus().equals(OrderStatusEnum.SECOND_RETURN.getStatus())){
+			if (userRole.getRoleId()!=1l && userRole.getRoleId()!=2l)
+				throw new RuntimeException("您没有权限进行此操作");
+			if (null == order.getThirdReturnAmount() || null==order.getThirdReturnTime()){
+				throw new RuntimeException("参数错误");
+			}
+			temp = new Order();
+			temp.setId(order.getId());
+			temp.setThirdReturnAmount(order.getThirdReturnAmount());
+			temp.setThirdReturnTime(order.getThirdReturnTime());
+			order.setStatus(OrderStatusEnum.THIRD_RETURN.getStatus());
+			orderMapper.updateByPrimaryKeySelective(order);
+
+			SelfBook selfBook = selfBookMapper.selectByPrimaryKey(bookId);
+			selfBook.setStatus(BookStatusEnum.THIRD_RETURN.getStatus()+"");
+			selfBookMapper.updateByPrimaryKeySelective(selfBook);
+		}else if (temp.getStatus().equals(OrderStatusEnum.THIRD_RETURN.getStatus())){
+			if (userRole.getRoleId()!=1l && userRole.getRoleId()!=8l)
+				throw new RuntimeException("您没有权限进行此操作");
+			temp = new Order();
+			temp.setId(order.getId());
+			order.setStatus(OrderStatusEnum.FINISH.getStatus());
+			orderMapper.updateByPrimaryKeySelective(order);
+
+			SelfBook selfBook = selfBookMapper.selectByPrimaryKey(bookId);
+			selfBook.setStatus(BookStatusEnum.FINISH.getStatus()+"");
+			selfBookMapper.updateByPrimaryKeySelective(selfBook);
+		}
 		return "更新状态成功";
 	}
 
 	@RequestMapping("/cancelOrder")
 	@ResponseBody
 	public String updateOrder(HttpSession session,Long id) {
+		User user = CommonUtils.getUser(session);
+		UserRole userRole = new UserRole();
+		userRole.setUserId(user.getId());
+		userRole = userRoleMapper.selectOne(userRole);
+		if (userRole.getRoleId()!=1l && userRole.getRoleId()!=8l)
+			throw new RuntimeException("您没有权限进行此操作");
+
 		Order order = new Order();
 		order.setId(id);
 		order.setStatus(OrderStatusEnum.CANCEL.getStatus());

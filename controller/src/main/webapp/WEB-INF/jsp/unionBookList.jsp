@@ -33,6 +33,17 @@
             <%@include file="0buttons.jsp" %>
         </div>
 
+        <div>
+            <table>
+                <tr>
+                    <td width="75%"></td>
+                    <td><b><font color='red'>×</font>未订单</b></td><td width="10px"></td>
+                    <td><b><font color='pink'>■</font>已预订</b></td><td width="10px"></td>
+                    <td><b><font color='blue'>●</font>已定未回款</b></td><td width="10px"></td>
+                    <td><b><font color='green'>√</font>订单完成</b></td>
+                </tr>
+            </table>
+        </div>
         <table class="layui-table"
                lay-data="{height: 'full-200', url:'/3/31/selectUnionBook',cellMinWidth: 20, page:true, id:'idTest'}"
                lay-filter="demo">
@@ -44,7 +55,7 @@
                 <th lay-data="{align:'center'}" colspan="6">主编</th>
                 <th lay-data="{align:'center'}" colspan="8">副主编</th>
                 <th lay-data="{align:'center'}" colspan="15">参编</th>
-                <th lay-data="{fixed: 'right',width: 167, align:'center', toolbar: '#barDemo'}" rowspan="2">操作</th>
+                <th lay-data="{fixed: 'right',width: 121, align:'center', toolbar: '#barDemo'}" rowspan="2">操作</th>
             </tr>
             <tr>
                 <th lay-data="{field:'a1s', sort: false}">1</th>
@@ -93,13 +104,13 @@
     <a href="" class="layui-table-link" target="_blank" onclick="info({{d.id}});return false">{{ d.bookName }}</a>
 </script>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="del">删除</a>
 </script>
 <%-- end 工具栏 --%>
 <script>
     function info(obj) {
+        var table = layui.table;
         layer.open({
             type: 2,
             title: '合作图书信息',
@@ -108,7 +119,17 @@
             offset: '50px',
             area: ['80%', '95%'],
             moveOut: true,
-            content: '${hostIp}/3/31/selectUnionBookInfo?bookId='+obj
+            content: '${hostIp}/3/31/selectUnionBookInfo?bookId='+obj,
+            end: function () {
+                table.reload('idTest', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        aaaaaa: 'xxx'
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
         });
     }
     layui.use('table', function () {
@@ -122,10 +143,20 @@
             var data = obj.data;
             if (obj.event === 'detail') {
                 layer.msg('ID：' + data.id + ' 的查看操作');
+
             } else if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
+                var warn='真的删除 '+data.bookName+' 么?'
+                layer.confirm(warn, function (index) {
+                    var url = '/3/31/deleteUnionBook'
+                    var json = JSON.stringify(data.id);
+                    $.ajax({
+                        type: 'POST',
+                        contentType: "application/json",
+                        url: url,
+                        data: json,
+                        success: callbackInfo,
+                        error: callbackError
+                    });
                 });
             } else if (obj.event === 'edit') {
                 layer.open({

@@ -12,7 +12,6 @@ public class SelfBook {
     @Id
     @Column(name = "id")
     private Long id;
-    @Id
     @Column(name = "book_name")
     private String bookName;
     @Column(name = "public_time")

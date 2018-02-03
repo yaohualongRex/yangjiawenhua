@@ -10271,6 +10271,15 @@ function callbackOpen(data) {
     }, 1000);
 }
 
+function callbackInfo(data) {
+    if (data != "") {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.msg(data);
+        });
+    }
+}
+
 function callback(data) {
     if (data != "") {
         layui.use('layer', function () {

@@ -15,6 +15,8 @@ import com.yjwh.crm.po.UnionBookPosition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import tk.mybatis.mapper.entity.Example;
@@ -38,6 +40,22 @@ public class UnionBookController {
     private OrderMapper orderMapper;
     @Autowired
     private BookInfoMapper bookInfoMapper;
+
+    @RequestMapping("/deleteUnionBook")
+    @ResponseBody
+    public String deleteUnionBook(@RequestBody String id){
+        Example example = new Example(Order.class);
+        example.createCriteria()
+                .andEqualTo("type",1)
+                .andEqualTo("bookId",Long.valueOf(id))
+                .andNotEqualTo("status",0);
+        List<Order> orders = orderMapper.selectByExample(example);
+        if (CollectionUtils.isEmpty(orders)){//该书没有正在处理、或已完成的订单可以删除
+            unionBookMapper.deleteByPrimaryKey(Long.valueOf(id));
+            return "删除成功";
+        }else
+            throw new RuntimeException("该书存在正在处理、或已完成的订单，不可以被删除");
+    }
 
     @RequestMapping("/unionBookListJsp")
     public String unionBookListJsp(){

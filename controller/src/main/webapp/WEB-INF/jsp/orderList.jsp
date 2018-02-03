@@ -83,6 +83,11 @@
 </script>
 <%-- end 工具栏 --%>
 <script>
+    function callbackInfoAndFlush(obj) {
+        callbackInfo(obj)
+        flushall()
+    }
+
     layui.use('table', function () {
         var table = layui.table;
         //监听表格复选框选择
@@ -110,7 +115,7 @@
                         type: 'POST',
                         contentType: "application/json",
                         url: "/4/cancelOrder?id=" + data.id,
-                        success: flushall,
+                        success: callbackInfoAndFlush,
                         error: callbackError
                     });
                 });

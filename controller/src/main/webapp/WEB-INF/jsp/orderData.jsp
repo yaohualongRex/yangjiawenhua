@@ -13,7 +13,7 @@
 <div class="layui-layout layui-layout-admin">
     <div style="height: 20px"></div>
     <div align="center">
-        <form class="layui-form layui-form-pane" action="/4/updateOrder" method="post">
+        <form class="layui-form" action="/4/updateOrder" method="post">
             <input name="id" type="hidden" value="${order.id}">
             <div class="layui-form-item">
                 <div class="layui-inline">
@@ -119,10 +119,10 @@
 
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">回款金额</label>
+                    <label class="layui-form-label"><c:if test="${order.type eq 2}">第一次</c:if>回款金额</label>
                     <div class="layui-input-inline">
                         <c:if test='${order.status eq "3"}'>
-                            <input name="returnAmount" lay-verify="required" autocomplete="off" placeholder="请输入回款金额"
+                            <input name="returnAmount" lay-verify="required" autocomplete="off" placeholder="请输入<c:if test="${order.type eq 2}">第一次</c:if>回款金额"
                                    class="layui-input" type="text">
                         </c:if>
                         <c:if test='${order.status ne "3"}'>
@@ -132,10 +132,10 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">回款日期</label>
+                    <label class="layui-form-label"><c:if test="${order.type eq 2}">第一次</c:if>回款日期</label>
                     <div class="layui-input-inline">
                         <c:if test='${order.status eq "3"}'>
-                            <input name="returnDate" lay-verify="required" placeholder="请选择回款日期" id="date"
+                            <input name="returnDate" lay-verify="required" placeholder="请选择<c:if test="${order.type eq 2}">第一次</c:if>回款日期" id="date"
                                    autocomplete="off" class="layui-input" type="text">
                         </c:if>
                         <c:if test='${order.status ne "3"}'>
@@ -145,6 +145,69 @@
                     </div>
                 </div>
             </div>
+
+
+            <c:if test="${order.type eq 2}">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">第二次回款金额</label>
+                        <div class="layui-input-inline">
+                            <c:if test='${order.status eq "5"}'>
+                                <input name="secondReturnAmount" lay-verify="required" autocomplete="off" placeholder="请输入第二次回款金额"
+                                       class="layui-input" type="text">
+                            </c:if>
+                            <c:if test='${order.status ne "5"}'>
+                                <input autocomplete="off" class="layui-input" type="text" disabled="disabled"
+                                       value="${order.secondReturnAmount}">
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">第二次回款日期</label>
+                        <div class="layui-input-inline">
+                            <c:if test='${order.status eq "5"}'>
+                                <input name="secondReturnTime" lay-verify="required" placeholder="请选择第二次回款日期" id="date"
+                                       autocomplete="off" class="layui-input" type="text">
+                            </c:if>
+                            <c:if test='${order.status ne "5"}'>
+                                <input autocomplete="off" class="layui-input" type="text" value="${secondReturnDate}"
+                                       disabled="disabled">
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">第三次回款金额</label>
+                        <div class="layui-input-inline">
+                            <c:if test='${order.status eq "6"}'>
+                                <input name="thirdReturnAmount" lay-verify="required" autocomplete="off" placeholder="请输入第三次回款金额"
+                                       class="layui-input" type="text">
+                            </c:if>
+                            <c:if test='${order.status ne "6"}'>
+                                <input autocomplete="off" class="layui-input" type="text" disabled="disabled"
+                                       value="${order.thirdReturnAmount}">
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">第三次回款日期</label>
+                        <div class="layui-input-inline">
+                            <c:if test='${order.status eq "6"}'>
+                                <input name="thirdReturnTime" lay-verify="required" placeholder="请选择第三次回款日期" id="date"
+                                       autocomplete="off" class="layui-input" type="text">
+                            </c:if>
+                            <c:if test='${order.status ne "6"}'>
+                                <input autocomplete="off" class="layui-input" type="text" value="${thirdReturnDate}"
+                                       disabled="disabled">
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+            </c:if>
+
 
             <div class="layui-form-item">
                 <div class="layui-inline">
@@ -169,7 +232,16 @@
                         <button class="layui-btn" lay-submit="" lay-filter="demo1">确定合同发送</button>
                     </c:if>
                     <c:if test='${order.status eq "3"}'>
-                        <button class="layui-btn" lay-submit="" lay-filter="demo1">确定回款</button>
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">确定<c:if test="${order.type eq 2}">第一次</c:if>回款(财政总监)</button>
+                    </c:if>
+                    <c:if test='${order.status eq "5"}'>
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">确定第二次回款(财政总监)</button>
+                    </c:if>
+                    <c:if test='${order.status eq "6"}'>
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">确定第三次回款(财政总监)</button>
+                    </c:if>
+                    <c:if test='${order.status eq "4" || order.status eq "7"}'>
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">确定完成(销售总监)</button>
                     </c:if>
                 </div>
             </div>
