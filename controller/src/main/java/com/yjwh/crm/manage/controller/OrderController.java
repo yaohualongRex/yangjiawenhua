@@ -137,7 +137,7 @@ public class OrderController {
 		order.setCreateTime(new Date());
 
 		Custom custom = new Custom();
-		custom.setChinaName(order.getPhoneNo());
+		custom.setChinaName(order.getCustomName());
 		custom.setPhoneNo(order.getPhoneNo());
 		custom = customMapper.selectOne(custom);
 		if (custom == null)
@@ -149,6 +149,7 @@ public class OrderController {
 
 			order.setBookInfoId(unionBook.getBookInfoId());
 			order.setUnionBookPosition(orderVo.getPlaceField());
+//			order.setId(Long.parseLong("1"));
 			orderMapper.insert(order);
 			Order temp = new Order();
 			temp.setOrderNo(order.getOrderNo());

@@ -49,7 +49,7 @@
 				<div class="layui-input-inline">
 					<B><input name="profession" lay-verify="required"
 						placeholder="请输入客户专业" autocomplete="off" class="layui-input"
-						type="text" disabled="disabled"></B>
+						type="text"></B>
 				</div>
 			</div>
 			<div class="layui-form-item">

@@ -123,7 +123,7 @@ public class CustomerController {
 //	            userRole = userRoleMapper.selectOne(userRole);
 //	            userRoleMapper.deleteByPrimaryKey(userRole.getId());
 	        });
-	        return "redirect:/2/22/userListJsp";
+	        return "redirect:/2/21/selectCustomJsp";
 	}
 	
 	@RequestMapping("/22/updateCustom")

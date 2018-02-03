@@ -18,7 +18,7 @@
 			<legend>客户信息编辑</legend>
 		</fieldset>
 
-		<form class="layui-form layui-form-pane" action="/2/22/addCustom"
+		<form class="layui-form layui-form-pane" action="/2/22/updateCustom"
 			method="post">
 			<div class="layui-form-item">
 				<label class="layui-form-label">客户姓名</label>
@@ -49,7 +49,7 @@
 				<div class="layui-input-inline">
 					<B><input name="profession" lay-verify="required"
 						placeholder="请输入客户专业" autocomplete="off" class="layui-input"
-						value="${custom.profession}" type="text" disabled="disabled"></B>
+						value="${custom.profession}" type="text"></B>
 				</div>
 			</div>
 			<div class="layui-form-item">
